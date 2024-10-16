@@ -1,0 +1,4 @@
+/home/jussiran/mega_fm/src/build/CMakeFiles/mega_fm.dir
+/home/jussiran/mega_fm/src/build/CMakeFiles/edit_cache.dir
+/home/jussiran/mega_fm/src/build/CMakeFiles/rebuild_cache.dir
+/home/jussiran/mega_fm/src/build/CMakeFiles/mega_fm_autogen.dir
