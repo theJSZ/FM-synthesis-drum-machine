@@ -1,7 +1,13 @@
 #include <iostream>
 #include <Stk.h>
 #include <QThread>
+#include <QApplication>
+#include "mainwindow.h"
 
-int main() {
-    std::cout << "asd" << std::endl;
+int main(int argc, char *argv[]) {
+
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }

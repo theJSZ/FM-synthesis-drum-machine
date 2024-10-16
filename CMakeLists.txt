@@ -5,12 +5,15 @@ project(mega_fm)
 # add_subdirectory(stk)
 
 # Include the STK headers
-include_directories(${CMAKE_SOURCE_DIR}/../../stk/include)
+include_directories(${CMAKE_SOURCE_DIR}/../stk/include)
 
 # Add your source files
 set(SOURCES
-    ../main.cpp
-
+    src/main.cpp
+    src/mainwindow.cpp
+    src/audiothread.cpp
+    src/fmosc.cpp
+    src/sequencer.cpp
     # Your project source files
     # Add more source files here if needed
 )
@@ -19,7 +22,7 @@ set(CMAKE_AUTOMOC ON)
 
 
 # Add STK source files to your project
-file(GLOB STK_SOURCES ${CMAKE_SOURCE_DIR}/../../stk/src/*.cpp)
+file(GLOB STK_SOURCES ${CMAKE_SOURCE_DIR}/../stk/src/*.cpp)
 
 # Add executable for your project
 add_executable(mega_fm ${SOURCES} ${STK_SOURCES})

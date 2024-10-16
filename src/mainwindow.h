@@ -17,23 +17,8 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-public slots:
-    void toggleStep(int step);
-
 private:
     Ui::MainWindow *ui;
     AudioThread *audioThread;
-    void setCoarseTune(int);
-    void setFineTune(int);
-    void changeOscillator();
-    void setNoiseLevel(int);
-    void on_dialCutoff_valueChanged(int value);
-    void setFegAmount(int);
-    void setFegDecay(int);
-    void updateStepButtons(int);
-
-
-
-
 };
 #endif // MAINWINDOW_H
