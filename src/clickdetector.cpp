@@ -1,7 +1,7 @@
 #include "clickdetector.h"
 
 ClickDetector::ClickDetector(QGroupBox **groupBoxes, QObject *parent) : QObject(parent) {
-    for (int i = 0; i < 16; ++i) {
+    for (int i = 0; i < N_STEPS; ++i) {
         this->groupBoxes[i] = groupBoxes[i];
         groupBoxes[i]->installEventFilter(this);
     }
@@ -13,7 +13,7 @@ bool ClickDetector::eventFilter(QObject *obj, QEvent *event) {
         QGroupBox *groupBox = qobject_cast<QGroupBox*>(obj);
 
         if (groupBox) {
-            for (int i = 0; i < 16; ++i) {
+            for (int i = 0; i < N_STEPS; ++i) {
                 if (groupBox == groupBoxes[i]) emit groupBoxIndexClicked(i);
             }
             return true;

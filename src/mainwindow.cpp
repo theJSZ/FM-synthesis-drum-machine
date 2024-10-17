@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     audioThread = new AudioThread();
     audioThread->start();
 
-    for (int i = 0; i < 16; ++i) {
+    for (int i = 0; i < N_STEPS; ++i) {
 
         QList<QDial *> dials = groupBoxes[i]->findChildren<QDial *>();
         for (int j = 0; j < dials.size(); ++j) {
@@ -119,7 +119,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     connect(audioThread->sequencer, &Sequencer::currentStepChanged, this, [=](int stepNumber) {
-        for (int i = 0; i < 16; ++i) {
+        for (int i = 0; i < N_STEPS; ++i) {
             if (audioThread->sequencer->steps[i]->active) {
                 groupBoxes[i]->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_DEFAULT));
             } else {

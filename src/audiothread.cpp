@@ -1,7 +1,7 @@
 #include "audiothread.h"
 
 AudioThread::AudioThread() :
-  bpm(120),
+  bpm(140),
   sequencer(new Sequencer(this)),
   osc(new FMOsc)
   // ampEnvelope(new stk::ADSR),
@@ -44,8 +44,6 @@ int AudioThread::audioCallback(void *outputBuffer, void *inputBuffer,
     sampleCounter++;
     buffer[i] = audioThread->osc->tick(); // * audioThread->ampEnvelope->tick();
     double L = 0.5;
-    buffer[i] = L * (tanh(buffer[i])/L);
-    buffer[i] = L * (tanh(buffer[i])/L);
     buffer[i] = L * (tanh(buffer[i])/L);
     buffer[i] = L * (tanh(buffer[i])/L);
 

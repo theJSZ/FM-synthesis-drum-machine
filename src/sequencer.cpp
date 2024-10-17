@@ -6,7 +6,7 @@ Sequencer::Sequencer(AudioThread* audioThread) :
   bpm(120)
 
   {
-    for (int i = 0; i < 16; ++i) {
+    for (int i = 0; i < N_STEPS; ++i) {
       steps[i] = new SequencerStep;
       std::cout << i << std::endl;
     }
@@ -17,7 +17,7 @@ Sequencer::~Sequencer() {}
 
 void Sequencer::advance() {
   currentStepNumber++;
-  currentStepNumber %= 16;
+  currentStepNumber %= N_STEPS;
   emit currentStepChanged(currentStepNumber);
 
   // trig envelopes

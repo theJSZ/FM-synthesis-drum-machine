@@ -7,6 +7,7 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <iostream>
+#include "constants.h"
 
 class ClickDetector : public QObject {
     Q_OBJECT
