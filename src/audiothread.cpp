@@ -3,11 +3,18 @@
 AudioThread::AudioThread() :
   bpm(120),
   sequencer(new Sequencer(this)),
-  osc(new FMOsc)
-  {}
+  osc(new FMOsc),
+  ampEnvelope(new stk::ADSR),
+  fmEnvelope(new stk::ADSR)
+  {
+    ampEnvelope->setAllTimes(0.001, 1, 0.0, 0.001);
+    osc->setVolume(1.0);
+    osc->setFmAmount(0.0);
+    osc->setFrequency(200.0);
+  }
 
 AudioThread::~AudioThread() {
-  ;
+
 }
 
 float AudioThread::getBpm() {
@@ -27,22 +34,22 @@ int AudioThread::audioCallback(void *outputBuffer, void *inputBuffer,
 
   // timing stuff
   static int sampleCounter = 0;
-  float bpm = audioThread->getBpm();
-  float samplesPer16thNote = (SAMPLERATE * 60.0) / (bpm * 4.0);
+  static float bpm = audioThread->getBpm();
+  static float samplesPer16thNote = (SAMPLERATE * 60.0) / (bpm * 4.0);
 
-  // audioThread->feg->setValue(1);
-  // audioThread->feg->setTarget(0);
   for (unsigned int i = 0; i < nBufferFrames; ++i) {
-    // processing
-    sampleCounter++;
     buffer[i] = audioThread->osc->tick();
-    buffer[i] *= audioThread->ampEnvelope->tick();
+
+    // // processing
+    sampleCounter++;
+    buffer[i] = audioThread->osc->tick() * audioThread->ampEnvelope->tick();
     double L = 0.5;
     buffer[i] = L * (tanh(buffer[i])/L);
     buffer[i] = L * (tanh(buffer[i])/L);
 
-    // sequencer
+    // // sequencer
     if (sampleCounter >= samplesPer16thNote) {
+      // std::cout << "next step!" << std::endl;
       sampleCounter = 0;
       audioThread->sequencer->advance();
     }
@@ -62,10 +69,19 @@ void AudioThread::run() {
   try {
     audio.openStream(&parameters, nullptr, RTAUDIO_FLOAT32, sampleRate, &bufferFrames, &audioCallback, this);
     audio.startStream();
+    std::cout << "audio stream started" << std::endl;
   }
   catch (stk::StkError & ) {
+    std::cout << "could not start audio stream" << std::endl;
     exit(1);
   }
 
-  exec();
+  // try {
+  //   exec();
+  // } catch (std::exception& e) {
+  //   std::cerr << "Exception caught: " << e.what() << std::endl;
+  // } catch (...) {
+  //   std::cerr << "Unknown exception caught" << std::endl;
+  // }
+  // exec();
 }

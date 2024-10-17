@@ -20,5 +20,6 @@ public:
 private:
     Ui::MainWindow *ui;
     AudioThread *audioThread;
+    void setBackgroundColor(QWidget*, std::string);
 };
 #endif // MAINWINDOW_H

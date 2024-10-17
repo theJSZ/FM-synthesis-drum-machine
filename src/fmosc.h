@@ -23,8 +23,8 @@ public:
 
 private:
 
-  stk::SineWave carrier;
-  stk::SineWave modulator;
+  stk::SineWave *carrier;
+  stk::SineWave *modulator;
 
   float frequency;
   float rampAmount;
