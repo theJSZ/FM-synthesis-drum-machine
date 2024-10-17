@@ -6,32 +6,40 @@
 class SequencerStep {
 public:
   SequencerStep() :
-    frequency(BASE_FREQUENCY),
+    frequencyMultiplier(1),
     rampAmount(0.0),
-    rampDecay(0.0),
+    rampDecay(0.01),
 
     fmAmount(0.0),
-    fmFrequency(BASE_FM_FREQUENCY),
-    fmDecay(0.0),
+    fmFrequencyMultiplier(BASE_FM_MULTIPLIER),
+    fmDecay(0.01),
     fmFeedback(0.0),
 
     aegDecay(BASE_AEG_DECAY),
-    volume(1.0)
+    volume(1.0),
+
+    active(true)
   {}
+
+  void toggleActive() {
+    active = !active;
+  }
 
   ~SequencerStep() {}
 
-  float frequency;
+  float frequencyMultiplier;
   float rampAmount;
   float rampDecay;
 
   float fmAmount;
-  float fmFrequency;
+  float fmFrequencyMultiplier;
   float fmDecay;
   float fmFeedback;
 
   float aegDecay;
   float volume;
+
+  bool active;
 };
 
 #endif

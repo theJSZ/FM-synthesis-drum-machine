@@ -2,7 +2,7 @@
 
 Sequencer::Sequencer(AudioThread* audioThread) :
   audiothread(audioThread),
-  currentStep(0),
+  currentStepNumber(0),
   bpm(120)
 
   {
@@ -16,14 +16,41 @@ Sequencer::Sequencer(AudioThread* audioThread) :
 Sequencer::~Sequencer() {}
 
 void Sequencer::advance() {
-  currentStep++;
-  currentStep %= 16;
-  std::cout << "step " << currentStep << std::endl;
-  audiothread->ampEnvelope->setValue(1.0);
-  audiothread->ampEnvelope->setTarget(0.0);
-  audiothread->osc->setFrequency(steps[currentStep]->frequency);
+  currentStepNumber++;
+  currentStepNumber %= 16;
+  emit currentStepChanged(currentStepNumber);
+
+  // trig envelopes
+  if (steps[currentStepNumber]->active) {
+    audiothread->osc->ampEnvelope->setValue(1.0);
+    audiothread->osc->ampEnvelope->setTarget(0.0);
+    audiothread->osc->pitchEnvelope->setValue(1.0);
+    audiothread->osc->pitchEnvelope->setTarget(0.0);
+    audiothread->osc->fmEnvelope->setValue(1.0);
+    audiothread->osc->fmEnvelope->setTarget(0.0);
+    // set oscillator
+    updateOsc(currentStepNumber);
+  }
+
 }
 
-int Sequencer::getCurrentStep() {
-  return currentStep;
+int Sequencer::getCurrentStepNumber() {
+  return currentStepNumber;
+}
+
+void Sequencer::updateOsc(int stepNumber) {
+  FMOsc *osc = audiothread->osc;
+  SequencerStep *step = steps[stepNumber];
+
+  osc->setFrequencyMultiplier(step->frequencyMultiplier);
+  osc->setRampAmount(step->rampAmount);
+  osc->setRampDecay(step->rampDecay);
+
+  osc->setFmAmount(step->fmAmount);
+  osc->setFmFrequencyMultiplier(step->fmFrequencyMultiplier);
+  osc->setFmDecay(step->fmDecay);
+  osc->setFmFeedback(step->fmFeedback);
+
+  osc->setAegDecay(step->aegDecay);
+  osc->setVolume(step->volume);
 }

@@ -3,14 +3,14 @@
 AudioThread::AudioThread() :
   bpm(120),
   sequencer(new Sequencer(this)),
-  osc(new FMOsc),
-  ampEnvelope(new stk::ADSR),
-  fmEnvelope(new stk::ADSR)
+  osc(new FMOsc)
+  // ampEnvelope(new stk::ADSR),
+  // fmEnvelope(new stk::ADSR)
   {
-    ampEnvelope->setAllTimes(0.001, 1, 0.0, 0.001);
-    osc->setVolume(1.0);
-    osc->setFmAmount(0.0);
-    osc->setFrequency(200.0);
+    // ampEnvelope->setAllTimes(0.001, 1, 0.0, 0.001);
+    // osc->setVolume(1.0);
+    // osc->setFmAmount(0.0);
+    // osc->setFrequency(200.0);
   }
 
 AudioThread::~AudioThread() {
@@ -42,8 +42,10 @@ int AudioThread::audioCallback(void *outputBuffer, void *inputBuffer,
 
     // // processing
     sampleCounter++;
-    buffer[i] = audioThread->osc->tick() * audioThread->ampEnvelope->tick();
+    buffer[i] = audioThread->osc->tick(); // * audioThread->ampEnvelope->tick();
     double L = 0.5;
+    buffer[i] = L * (tanh(buffer[i])/L);
+    buffer[i] = L * (tanh(buffer[i])/L);
     buffer[i] = L * (tanh(buffer[i])/L);
     buffer[i] = L * (tanh(buffer[i])/L);
 

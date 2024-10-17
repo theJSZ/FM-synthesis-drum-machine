@@ -14,16 +14,17 @@ public:
   Sequencer(AudioThread* audioThread);
   ~Sequencer();
   void advance();
-  int getCurrentStep();
+  int getCurrentStepNumber();
   SequencerStep *steps[16];
 
 signals:
-  void currentStepChanged(int newStep);
+  void currentStepChanged(int newStepNumber);
 
 private:
   int bpm;
   AudioThread* audiothread;
-  int currentStep;
+  int currentStepNumber;
+  void updateOsc(int step);
 };
 
 #endif

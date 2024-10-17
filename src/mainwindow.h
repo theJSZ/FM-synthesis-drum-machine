@@ -2,8 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGroupBox>
+#include <QList>
+#include <QString>
+#include <string>
 #include "audiothread.h"
 #include <math.h>
+#include "clickdetector.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,5 +26,6 @@ private:
     Ui::MainWindow *ui;
     AudioThread *audioThread;
     void setBackgroundColor(QWidget*, std::string);
+    QGroupBox *groupBoxes[16];
 };
 #endif // MAINWINDOW_H

@@ -1,18 +1,20 @@
 #ifndef FMOSC_H
 #define FMOSC_H
 
-#include "SineWave.h"
+#include <SineWave.h>
+#include "constants.h"
+#include <ADSR.h>
 
 class FMOsc {
 public:
   FMOsc();
   ~FMOsc();
 
-  void setFrequency(float frequency);
+  void setFrequencyMultiplier(float frequency);
   void setRampAmount(float rampAmount);
   void setRampDecay(float rampDecay);
   void setFmAmount(float fmAmount);
-  void setFmFrequencyMultiplier(float fmFrequency);
+  void setFmFrequencyMultiplier(float fmFrequencyMultiplier);
   void setFmDecay(float fmDecay);
   void setFmFeedback(float fmFeedback);
   void setAegDecay(float aegDecay);
@@ -21,12 +23,18 @@ public:
   void reset();
   float tick();
 
+  stk::ADSR *fmEnvelope;
+	stk::ADSR *ampEnvelope;
+	stk::ADSR *ampEnvelope2;
+  stk::ADSR *pitchEnvelope;
+
+
 private:
 
   stk::SineWave *carrier;
   stk::SineWave *modulator;
 
-  float frequency;
+  float frequencyMultiplier;
   float rampAmount;
   float rampDecay;
 
@@ -37,6 +45,8 @@ private:
 
   float aegDecay;
   float volume;
+
+
 };
 
 #endif

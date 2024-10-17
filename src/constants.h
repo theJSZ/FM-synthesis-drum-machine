@@ -3,8 +3,8 @@
 
 #include <string>
 
-const float BASE_FREQUENCY = 160;
-const float BASE_FM_FREQUENCY = BASE_FREQUENCY / 2;
+const float BASE_FREQUENCY = 80;
+const float BASE_FM_MULTIPLIER = 1;
 const float BASE_AEG_DECAY = 1;
 const unsigned int SAMPLERATE = 44100;
 const unsigned int BUFFER_FRAMES = 512;

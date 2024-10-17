@@ -3,7 +3,7 @@
 FMOsc::FMOsc() :
   carrier(new stk::SineWave),
   modulator(new stk::SineWave),
-  frequency(400.0),
+  frequencyMultiplier(1),
   rampAmount(0.0),
   rampDecay(0.001),
   fmAmount(0.0),
@@ -11,17 +11,24 @@ FMOsc::FMOsc() :
   fmDecay(0.001),
   fmFeedback(0.0),
   aegDecay(0.001),
-  volume(1.0)
-
+  volume(1.0),
+  ampEnvelope(new stk::ADSR),
+  ampEnvelope2(new stk::ADSR),
+  fmEnvelope(new stk::ADSR),
+  pitchEnvelope(new stk::ADSR)
   {
+    ampEnvelope->setAllTimes(0.001, 1, 0.0, 0.001);
+    ampEnvelope2->setAllTimes(0.01, 0.01, 0.0, 0.001);
+    fmEnvelope->setAllTimes(0.001, 1, 0.0, 0.001);
+    ampEnvelope->setAllTimes(0.001, 1, 0.0, 0.001);
     std::cout << "oscillator created" << std::endl;
   }
 FMOsc::~FMOsc() {}
 
-void FMOsc::setFrequency(float frequency) {
-  carrier->setFrequency(frequency);
-  this->frequency = frequency;
-  modulator->setFrequency(fmFrequencyMultiplier * frequency);
+void FMOsc::setFrequencyMultiplier(float frequencyMultiplier) {
+  // carrier->setFrequency(frequency);
+  this->frequencyMultiplier = frequencyMultiplier;
+  // modulator->setFrequency(fmFrequencyMultiplier * frequency);
 }
 
 void FMOsc::setRampAmount(float rampAmount) {
@@ -29,7 +36,8 @@ void FMOsc::setRampAmount(float rampAmount) {
 }
 
 void FMOsc::setRampDecay(float rampDecay) {
-  this->rampDecay = rampDecay;
+  // this->rampDecay = rampDecay;
+  pitchEnvelope->setDecayTime(rampDecay);
 }
 
 void FMOsc::setFmAmount(float fmAmount) {
@@ -41,7 +49,7 @@ void FMOsc::setFmFrequencyMultiplier(float fmFrequencyMultiplier) {
 }
 
 void FMOsc::setFmDecay(float fmDecay) {
-  this->fmDecay = fmDecay;
+  fmEnvelope->setDecayTime(fmDecay);
 }
 
 void FMOsc::setFmFeedback(float fmFeedback) {
@@ -49,7 +57,7 @@ void FMOsc::setFmFeedback(float fmFeedback) {
 }
 
 void FMOsc::setAegDecay(float aegDecay) {
-  this->aegDecay = aegDecay;
+  ampEnvelope->setDecayTime(aegDecay);
 }
 
 void FMOsc::setVolume(float volume) {
@@ -58,12 +66,18 @@ void FMOsc::setVolume(float volume) {
 
 void FMOsc::reset() {
   carrier->reset();
+  modulator->reset();
 }
 
 float FMOsc::tick() {
-  double mod_tick = modulator->tick();
-  modulator->addPhase(mod_tick * fmFeedback);
-  carrier->addPhase(mod_tick * fmAmount);
-  return carrier->tick() * this->volume;
+  float targetVolume = volume * ampEnvelope->tick();
+  ampEnvelope2->setTarget(targetVolume);
+  float targetFrequency = (BASE_FREQUENCY * frequencyMultiplier) * (1 + (4* rampAmount * pitchEnvelope->tick()));
+  carrier->setFrequency(targetFrequency);
+  modulator->setFrequency(targetFrequency * fmFrequencyMultiplier);
+  double modTick = modulator->tick() * fmEnvelope->tick();
+  modulator->addPhase(modTick * fmFeedback);
+  carrier->addPhase(modTick * fmAmount);
+  return carrier->tick() *  ampEnvelope2->tick();
 }
 

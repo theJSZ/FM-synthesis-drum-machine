@@ -17,8 +17,8 @@ public:
 	~AudioThread();
 	FMOsc *osc;
 
-	stk::ADSR *fmEnvelope;
-	stk::ADSR *ampEnvelope;
+	// stk::ADSR *fmEnvelope;
+	// stk::ADSR *ampEnvelope;
 
 	unsigned int getSampleRate();
 	float getBpm();
