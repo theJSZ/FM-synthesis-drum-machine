@@ -18,14 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
     groupBoxes[5]  = ui->groupBox_6;
     groupBoxes[6]  = ui->groupBox_7;
     groupBoxes[7]  = ui->groupBox_8;
-    groupBoxes[8]  = ui->groupBox_9;
-    groupBoxes[9]  = ui->groupBox_10;
-    groupBoxes[10] = ui->groupBox_11;
-    groupBoxes[11] = ui->groupBox_12;
-    groupBoxes[12] = ui->groupBox_13;
-    groupBoxes[13] = ui->groupBox_14;
-    groupBoxes[14] = ui->groupBox_15;
-    groupBoxes[15] = ui->groupBox_16;
 
     audioThread = new AudioThread();
     audioThread->start();
