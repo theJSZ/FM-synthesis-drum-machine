@@ -30,6 +30,11 @@ MainWindow::MainWindow(QWidget *parent)
         audioThread->osc->setMasterFrequencyMultiplier(scaledDialValue);
     });
 
+    // connect tempo
+    connect(ui->dial_tempo, &QDial::valueChanged, [=](int value) {
+        audioThread->setBpm((float) value);
+    });
+
     ui->dial_master_pitch->setValue(1);
     ui->dial_master_pitch->setValue(0);
 

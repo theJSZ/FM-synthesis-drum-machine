@@ -1,9 +1,10 @@
 #include "audiothread.h"
 
 AudioThread::AudioThread() :
-  bpm(140),
+  bpm(160),
   sequencer(new Sequencer(this)),
-  osc(new FMOsc)
+  osc(new FMOsc),
+  reverb(new stk::FreeVerb())
   // ampEnvelope(new stk::ADSR),
   // fmEnvelope(new stk::ADSR)
   {
@@ -14,11 +15,17 @@ AudioThread::AudioThread() :
   }
 
 AudioThread::~AudioThread() {
-
+  reverb->setRoomSize(1);
+  reverb->setDamping(1);
 }
 
 float AudioThread::getBpm() {
-  return bpm;
+  return (float) this->bpm;
+}
+
+void AudioThread::setBpm(float bpm) {
+  this->bpm = bpm;
+  std::cout << this->bpm << std::endl;
 }
 
 unsigned int AudioThread::getSampleRate() {
@@ -34,15 +41,15 @@ int AudioThread::audioCallback(void *outputBuffer, void *inputBuffer,
 
   // timing stuff
   static int sampleCounter = 0;
-  static float bpm = audioThread->getBpm();
-  static float samplesPer16thNote = (SAMPLERATE * 60.0) / (bpm * 4.0);
+  float bpm = audioThread->getBpm();
+  float samplesPer16thNote = (SAMPLERATE * 60.0) / (bpm * 4.0);
 
   for (unsigned int i = 0; i < nBufferFrames; ++i) {
     buffer[i] = audioThread->osc->tick();
-
+    buffer[i] += 0.5 * audioThread->reverb->tick(buffer[i], 0);
     // // processing
     sampleCounter++;
-    buffer[i] = audioThread->osc->tick(); // * audioThread->ampEnvelope->tick();
+    // buffer[i] = audioThread->osc->tick(); // * audioThread->ampEnvelope->tick();
     double L = 0.5;
     buffer[i] = L * (tanh(buffer[i])/L);
     buffer[i] = L * (tanh(buffer[i])/L);

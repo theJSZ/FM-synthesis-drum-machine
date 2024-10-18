@@ -9,6 +9,7 @@
 #include "sequencer.h"
 #include "fmosc.h"
 #include "constants.h"
+#include <FreeVerb.h>
 
 class Sequencer;
 class AudioThread : public QThread {
@@ -24,6 +25,8 @@ public:
 	float getBpm();
 	Sequencer *sequencer;
 
+	void setBpm(float bpm);
+
 protected:
 	void run() override;
 
@@ -38,6 +41,8 @@ private:
 	unsigned int sampleRate = SAMPLERATE;
 	unsigned int bufferFrames = BUFFER_FRAMES;
 	float bpm;
+
+	stk::FreeVerb *reverb;
 };
 
 #endif
