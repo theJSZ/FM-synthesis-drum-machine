@@ -64,6 +64,10 @@ void FMOsc::setVolume(float volume) {
   this->volume = volume;
 }
 
+void FMOsc::setMasterFrequencyMultiplier(float frequencyMultiplier) {
+  this->masterFrequencyMultiplier = frequencyMultiplier;
+}
+
 void FMOsc::reset() {
   carrier->reset();
   modulator->reset();
@@ -72,7 +76,7 @@ void FMOsc::reset() {
 float FMOsc::tick() {
   float targetVolume = volume * ampEnvelope->tick();
   ampEnvelope2->setTarget(targetVolume);
-  float targetFrequency = (BASE_FREQUENCY * frequencyMultiplier) * (1 + (4* rampAmount * pitchEnvelope->tick()));
+  float targetFrequency = (BASE_FREQUENCY * frequencyMultiplier * masterFrequencyMultiplier) * (1 + (4* rampAmount * pitchEnvelope->tick()));
   carrier->setFrequency(targetFrequency);
   modulator->setFrequency(targetFrequency * fmFrequencyMultiplier);
   double modTick = modulator->tick() * fmEnvelope->tick();

@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , groupBoxes()
 {
     ui->setupUi(this);
+    srand(time(NULL));
 
 
     groupBoxes[0]  = ui->groupBox_1;
@@ -22,6 +23,17 @@ MainWindow::MainWindow(QWidget *parent)
     audioThread = new AudioThread();
     audioThread->start();
 
+    // connect master pitch
+    connect(ui->dial_master_pitch, &QDial::valueChanged, [=](int dialValue) {
+        float scaledDialValue = (float) dialValue / 500; // -1 .. 1
+        scaledDialValue += 1.5;   //  0.5 .. 2.5
+        audioThread->osc->setMasterFrequencyMultiplier(scaledDialValue);
+    });
+
+    ui->dial_master_pitch->setValue(1);
+    ui->dial_master_pitch->setValue(0);
+
+    // connect sequence dials
     for (int i = 0; i < N_STEPS; ++i) {
 
         QList<QDial *> dials = groupBoxes[i]->findChildren<QDial *>();
@@ -98,6 +110,18 @@ MainWindow::MainWindow(QWidget *parent)
                 break;
             }
         }
+
+    // randomize dials
+    for (int i = 0; i < N_STEPS; ++i) {
+
+        QList<QDial *> dials = groupBoxes[i]->findChildren<QDial *>();
+        for (int j = 0; j < dials.size(); ++j) {
+            int randNum = rand()%(dials[j]->maximum() - dials[j]->minimum() + 1) + dials[j]->minimum();
+
+            dials[j]->setValue(randNum);
+        }
+    }
+
 
     ClickDetector *clickDetector = new ClickDetector(groupBoxes, this);
 

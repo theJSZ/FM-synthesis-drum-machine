@@ -10,7 +10,7 @@ public:
   FMOsc();
   ~FMOsc();
 
-  void setFrequencyMultiplier(float frequency);
+  void setFrequencyMultiplier(float frequencyMultiplier);
   void setRampAmount(float rampAmount);
   void setRampDecay(float rampDecay);
   void setFmAmount(float fmAmount);
@@ -19,6 +19,8 @@ public:
   void setFmFeedback(float fmFeedback);
   void setAegDecay(float aegDecay);
   void setVolume(float volume);
+
+  void setMasterFrequencyMultiplier(float frquencyMultiplier);
 
   void reset();
   float tick();
@@ -45,6 +47,8 @@ private:
 
   float aegDecay;
   float volume;
+
+  float masterFrequencyMultiplier;
 
 
 };

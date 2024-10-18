@@ -9,6 +9,8 @@
 #include "audiothread.h"
 #include <math.h>
 #include "clickdetector.h"
+#include <random>
+#include <time.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
