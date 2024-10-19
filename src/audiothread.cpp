@@ -4,7 +4,8 @@ AudioThread::AudioThread() :
   bpm(160),
   sequencer(new Sequencer(this)),
   osc(new FMOsc),
-  reverb(new stk::FreeVerb())
+  reverb(new stk::FreeVerb()),
+  reverbMix(0.5)
   // ampEnvelope(new stk::ADSR),
   // fmEnvelope(new stk::ADSR)
   {
@@ -32,6 +33,15 @@ unsigned int AudioThread::getSampleRate() {
   return sampleRate;
 }
 
+void AudioThread::setReverbMix(float mix) {
+  std::cout << "reverb mix: " << mix << std::endl;
+  reverbMix = mix;
+}
+
+void AudioThread::setReverbDamp(float damp) {
+  reverb->setDamping(damp);
+}
+
 int AudioThread::audioCallback(void *outputBuffer, void *inputBuffer,
   unsigned int nBufferFrames, double streamTime,
   RtAudioStreamStatus status, void *userData)
@@ -46,7 +56,7 @@ int AudioThread::audioCallback(void *outputBuffer, void *inputBuffer,
 
   for (unsigned int i = 0; i < nBufferFrames; ++i) {
     buffer[i] = audioThread->osc->tick();
-    buffer[i] += 0.5 * audioThread->reverb->tick(buffer[i], 0);
+    buffer[i] += audioThread->reverbMix * audioThread->reverb->tick(buffer[i], 0);
     // // processing
     sampleCounter++;
     // buffer[i] = audioThread->osc->tick(); // * audioThread->ampEnvelope->tick();

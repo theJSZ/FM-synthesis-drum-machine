@@ -26,6 +26,8 @@ public:
 	Sequencer *sequencer;
 
 	void setBpm(float bpm);
+	void setReverbMix(float mix);
+	void setReverbDamp(float damp);
 
 protected:
 	void run() override;
@@ -43,6 +45,8 @@ private:
 	float bpm;
 
 	stk::FreeVerb *reverb;
+	float reverbMix;
+	float reverbDamp;
 };
 
 #endif

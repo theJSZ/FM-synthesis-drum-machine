@@ -24,8 +24,6 @@ void Sequencer::toggleActiveStep(int step) {
 void Sequencer::advance() {
   currentStepNumber++;
   currentStepNumber %= 16;
-  std::cout << "seuencer advanced to " << currentStepNumber << std::endl;
-  // emit currentStepChanged(currentStepNumber % 8);
   emit currentStepChanged(currentStepNumber);
 
   // trig envelopes
