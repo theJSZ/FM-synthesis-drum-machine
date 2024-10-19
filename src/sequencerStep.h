@@ -18,6 +18,8 @@ public:
     aegDecay(BASE_AEG_DECAY),
     volume(1.0),
 
+    randomness(0),
+
     active(true)
   {}
 
@@ -38,6 +40,8 @@ public:
 
   float aegDecay;
   float volume;
+
+  int randomness;
 
   bool active;
 };

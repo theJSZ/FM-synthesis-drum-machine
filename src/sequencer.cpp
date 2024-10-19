@@ -26,8 +26,13 @@ void Sequencer::advance() {
   currentStepNumber %= 16;
   emit currentStepChanged(currentStepNumber);
 
+  bool playStep = activeStep[currentStepNumber];
+  if (rand() % 100 < steps[currentStepNumber % 8]->randomness) {
+    playStep = !playStep;
+  }
+
   // trig envelopes
-  if (activeStep[currentStepNumber]) {
+  if (playStep) {
     audiothread->osc->ampEnvelope->setValue(1.0);
     audiothread->osc->ampEnvelope->setTarget(0.0);
     audiothread->osc->pitchEnvelope->setValue(1.0);

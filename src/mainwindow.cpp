@@ -157,7 +157,13 @@ MainWindow::MainWindow(QWidget *parent)
                 });
                 // volume
                 break;
-
+            case 9:
+                connect(dials[j], &QDial::valueChanged, [=](int dialValue) {
+                    int scaledDialValue = dialValue / 2;
+                    audioThread->sequencer->steps[i]->randomness = scaledDialValue;
+                });
+                // randomness
+                break;
             default:
                 break;
             }
