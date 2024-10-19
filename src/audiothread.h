@@ -28,6 +28,9 @@ public:
 	void setBpm(float bpm);
 	void setReverbMix(float mix);
 	void setReverbDamp(float damp);
+	void setReverbRoomSize(float damp);
+
+	void setMasterVolume(float volume);
 
 protected:
 	void run() override;
@@ -46,7 +49,7 @@ private:
 
 	stk::FreeVerb *reverb;
 	float reverbMix;
-	float reverbDamp;
+	float masterVolume;
 };
 
 #endif

@@ -153,7 +153,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(598, 839);
+        MainWindow->resize(471, 741);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         groupBox_1 = new QGroupBox(centralwidget);
@@ -741,8 +741,8 @@ public:
         label_master_volume_2->setStyleSheet(QString::fromUtf8("border: 1px solid black; background-color: mediumaquamarine"));
         groupBox = new QGroupBox(centralwidget);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(0, 3, 471, 741));
-        groupBox->setStyleSheet(QString::fromUtf8("background-color: #404040; border-radius: 10; border: 5px solid black"));
+        groupBox->setGeometry(QRect(0, 0, 471, 741));
+        groupBox->setStyleSheet(QString::fromUtf8("background-color: #404040; border: 5px solid black"));
         groupBox_master_controls_2 = new QGroupBox(groupBox);
         groupBox_master_controls_2->setObjectName(QString::fromUtf8("groupBox_master_controls_2"));
         groupBox_master_controls_2->setGeometry(QRect(20, 610, 431, 101));
@@ -751,15 +751,15 @@ public:
         dial_reverb_mix->setObjectName(QString::fromUtf8("dial_reverb_mix"));
         dial_reverb_mix->setGeometry(QRect(20, 10, 61, 61));
         dial_reverb_mix->setStyleSheet(QString::fromUtf8("background-color: lightblue"));
-        dial_reverb_mix->setMinimum(-500);
-        dial_reverb_mix->setMaximum(500);
+        dial_reverb_mix->setMinimum(0);
+        dial_reverb_mix->setMaximum(1000);
         dial_master_reverb_damp = new QDial(groupBox_master_controls_2);
         dial_master_reverb_damp->setObjectName(QString::fromUtf8("dial_master_reverb_damp"));
         dial_master_reverb_damp->setGeometry(QRect(130, 10, 61, 61));
         dial_master_reverb_damp->setToolTipDuration(-1);
         dial_master_reverb_damp->setStyleSheet(QString::fromUtf8("background-color: pink"));
-        dial_master_reverb_damp->setMinimum(500);
-        dial_master_reverb_damp->setMaximum(2000);
+        dial_master_reverb_damp->setMinimum(0);
+        dial_master_reverb_damp->setMaximum(1000);
         dial_master_reverb_damp->setValue(1000);
         dial_master_reverb_damp->setInvertedAppearance(false);
         dial_master_reverb_damp->setWrapping(false);
@@ -770,7 +770,7 @@ public:
         dial_reverb_decay->setGeometry(QRect(240, 10, 61, 61));
         dial_reverb_decay->setStyleSheet(QString::fromUtf8("background-color: lightgray"));
         dial_reverb_decay->setMaximum(1000);
-        dial_reverb_decay->setValue(1000);
+        dial_reverb_decay->setValue(500);
         label_reverb_mix = new QLabel(groupBox_master_controls_2);
         label_reverb_mix->setObjectName(QString::fromUtf8("label_reverb_mix"));
         label_reverb_mix->setGeometry(QRect(15, 70, 71, 21));

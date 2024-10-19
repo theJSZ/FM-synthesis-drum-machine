@@ -5,7 +5,8 @@ AudioThread::AudioThread() :
   sequencer(new Sequencer(this)),
   osc(new FMOsc),
   reverb(new stk::FreeVerb()),
-  reverbMix(0.5)
+  reverbMix(0.5),
+  masterVolume(1.0)
   // ampEnvelope(new stk::ADSR),
   // fmEnvelope(new stk::ADSR)
   {
@@ -39,7 +40,18 @@ void AudioThread::setReverbMix(float mix) {
 }
 
 void AudioThread::setReverbDamp(float damp) {
+  std::cout << "reverb damping: " << damp << std::endl;
   reverb->setDamping(damp);
+}
+
+void AudioThread::setReverbRoomSize(float size) {
+  std::cout << "reverb room size: " << size << std::endl;
+  reverb->setRoomSize(size);
+}
+
+void AudioThread::setMasterVolume(float volume) {
+  masterVolume = volume*volume;
+  std::cout << "master volume: " << masterVolume << std::endl;
 }
 
 int AudioThread::audioCallback(void *outputBuffer, void *inputBuffer,
@@ -63,6 +75,7 @@ int AudioThread::audioCallback(void *outputBuffer, void *inputBuffer,
     double L = 0.5;
     buffer[i] = L * (tanh(buffer[i])/L);
     buffer[i] = L * (tanh(buffer[i])/L);
+    buffer[i] = buffer[i] * audioThread->masterVolume;
 
     // // sequencer
     if (sampleCounter >= samplesPer16thNote) {

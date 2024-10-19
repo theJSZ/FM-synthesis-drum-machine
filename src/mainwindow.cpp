@@ -47,6 +47,12 @@ MainWindow::MainWindow(QWidget *parent)
         audioThread->osc->setMasterFrequencyMultiplier(scaledDialValue);
     });
 
+    // connect master volume
+    connect(ui->dial_master_volume, &QDial::valueChanged, [=](int value) {
+        std::cout << "master volume dial at " << value << std::endl;
+        audioThread->setMasterVolume((float) value / 1000);
+    });
+
     // connect tempo
     connect(ui->dial_tempo, &QDial::valueChanged, [=](int value) {
         audioThread->setBpm((float) value);
@@ -57,15 +63,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     // connect reverb mix
     connect(ui->dial_reverb_mix, &QDial::valueChanged, [=](int value) {
-        value += 500;
         audioThread->setReverbMix((float) value / 1000);
     });
 
     // connect reverb damping
-    connect(ui->dial_reverb_mix, &QDial::valueChanged, [=](int value) {
-        value -= 500;
-        audioThread->setReverbDamp((float) value / 1500);
+    connect(ui->dial_master_reverb_damp, &QDial::valueChanged, [=](int value) {
+        audioThread->setReverbDamp((float) value / 1000);
     });
+
+    // connect reverb decay
+    connect(ui->dial_reverb_decay, &QDial::valueChanged, [=](int value) {
+        audioThread->setReverbRoomSize((float) value / 1000);
+    });
+
 
     // connect step buttons and sequence dials
     for (int i = 0; i < N_STEPS; ++i) {
