@@ -20,6 +20,23 @@ MainWindow::MainWindow(QWidget *parent)
     groupBoxes[6]  = ui->groupBox_7;
     groupBoxes[7]  = ui->groupBox_8;
 
+    stepButtons[0]  = ui->btn_step_1;
+    stepButtons[1]  = ui->btn_step_2;
+    stepButtons[2]  = ui->btn_step_3;
+    stepButtons[3]  = ui->btn_step_4;
+    stepButtons[4]  = ui->btn_step_5;
+    stepButtons[5]  = ui->btn_step_6;
+    stepButtons[6]  = ui->btn_step_7;
+    stepButtons[7]  = ui->btn_step_8;
+    stepButtons[8]  = ui->btn_step_9;
+    stepButtons[9]  = ui->btn_step_10;
+    stepButtons[10] = ui->btn_step_11;
+    stepButtons[11] = ui->btn_step_12;
+    stepButtons[12] = ui->btn_step_13;
+    stepButtons[13] = ui->btn_step_14;
+    stepButtons[14] = ui->btn_step_15;
+    stepButtons[15] = ui->btn_step_16;
+
     audioThread = new AudioThread();
     audioThread->start();
 
@@ -38,9 +55,17 @@ MainWindow::MainWindow(QWidget *parent)
     ui->dial_master_pitch->setValue(1);
     ui->dial_master_pitch->setValue(0);
 
-    // connect sequence dials
+    // connect step buttons and sequence dials
     for (int i = 0; i < N_STEPS; ++i) {
+        // step buttons
+        QList<QPushButton *> stepButtons = groupBoxes[i]->findChildren<QPushButton *>();
+        for (int j = 0; j < stepButtons.size(); ++j) {
+            connect(stepButtons[j], &QPushButton::clicked, [=]() {
+                audioThread->sequencer->toggleActiveStep(i + j*8);
+            });
+        }
 
+        // sequence dials
         QList<QDial *> dials = groupBoxes[i]->findChildren<QDial *>();
         for (int j = 0; j < dials.size(); ++j) {
             switch (j)
@@ -128,36 +153,67 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
 
-    ClickDetector *clickDetector = new ClickDetector(groupBoxes, this);
+    // ClickDetector *clickDetector = new ClickDetector(groupBoxes, this);
 
-    connect(clickDetector, &ClickDetector::groupBoxIndexClicked, this, [=](int index) {
-        audioThread->sequencer->steps[index]->toggleActive();
-        if (audioThread->sequencer->steps[index]->active) {
-            groupBoxes[index]->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_DEFAULT));
-        } else {
-            groupBoxes[index]->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_DISABLED));
-        }
-    });
+    // connect(clickDetector, &ClickDetector::groupBoxIndexClicked, this, [=](int index) {
+    //     audioThread->sequencer->steps[index]->toggleActive();
+    //     if (audioThread->sequencer->steps[index]->active) {
+    //         groupBoxes[index]->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_DEFAULT));
+    //     } else {
+    //         groupBoxes[index]->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_DISABLED));
+    //     }
+    // });
 
-    connect(audioThread->sequencer, &Sequencer::currentStepChanged, this, [=](int stepNumber) {
-        for (int i = 0; i < N_STEPS; ++i) {
-            if (audioThread->sequencer->steps[i]->active) {
-                groupBoxes[i]->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_DEFAULT));
-            } else {
-                groupBoxes[i]->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_DISABLED));
-            }
-        }
-        groupBoxes[stepNumber]->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_CURRENT));
+    // connect(audioThread->sequencer, &Sequencer::currentStepChanged, this, [=](int stepNumber) {
 
-    });
+    //     std::cout << "mainwindow thinks " << "step " << stepNumber << std::endl;
+        // stepButtons[stepNumber]->setStyleSheet(QString("border-radius:3; border: 1px solid black; background-color: white"));
+        // for (int i = 0; i < N_STEPS; ++i) {
+        //     if (audioThread->sequencer->steps[i]->active) {
+        //         groupBoxes[i]->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_DEFAULT));
+        //     } else {
+        //         groupBoxes[i]->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_DISABLED));
+        //     }
+        // }
+        // groupBoxes[stepNumber]->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_CURRENT));
+
+    // });
+
     }
+
+    connect(audioThread->sequencer, &Sequencer::currentStepChanged, this, &MainWindow::handleStepChanged, Qt::UniqueConnection);
+
+    connect(audioThread->sequencer, &Sequencer::stepActiveStatusChanged, this, [=](int step, bool on) {
+        QString style;
+        if (on) style = "border-radius:3; border: 1px solid black;background-color: red";
+        else style = "border-radius:3; border: 1px solid black;background-color: gray";
+        stepButtons[step]->setStyleSheet(style);
+    }, Qt::UniqueConnection);
 
     // setBackgroundColor(ui->groupBox_2, "pink");
     // ui->groupBox_11->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_DEFAULT));
     // ui->groupBox_10->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_DISABLED));
     // ui->groupBox_9->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_CURRENT));
+}
 
+// void MainWindow::initializeConnections() {
+//     if (audioThread) {
+//         connect(audioThread->sequencer, &Sequencer::currentStepChanged, this, &MainWindow::handleStepChanged, Qt::UniqueConnection);
+//     }
+// }
 
+void MainWindow::handleStepChanged(int stepNumber) {
+    stepButtons[stepNumber]->setStyleSheet(STEP_STYLESHEET_CURRENT);
+    // stepButtons[(stepNumber + 15) % 16]->setStyleSheet(QString("border-radius:3; border: 1px solid black; background-color: gray"));
+    setStepButtonLight((stepNumber + 15) % 16, audioThread->sequencer->activeStep[(stepNumber + 15) % 16]);
+}
+
+void MainWindow::setStepButtonLight(int step, bool on) {
+    QString style;
+    if (on) style = STEP_STYLESHEET_ACTIVE;
+    else style = STEP_STYLESHEET_NON_ACTIVE;
+
+    stepButtons[step]->setStyleSheet(style);
 }
 
 MainWindow::~MainWindow()

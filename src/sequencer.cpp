@@ -3,10 +3,11 @@
 Sequencer::Sequencer(AudioThread* audioThread) :
   audiothread(audioThread),
   currentStepNumber(0),
-  bpm(120)
+  bpm(120),
+  activeStep{0}
 
   {
-    for (int i = 0; i < N_STEPS; ++i) {
+    for (int i = 0; i < 16; ++i) {
       steps[i] = new SequencerStep;
       std::cout << i << std::endl;
     }
@@ -15,13 +16,20 @@ Sequencer::Sequencer(AudioThread* audioThread) :
 
 Sequencer::~Sequencer() {}
 
+void Sequencer::toggleActiveStep(int step) {
+  activeStep[step] = !activeStep[step];
+  emit stepActiveStatusChanged(step, activeStep[step]);
+}
+
 void Sequencer::advance() {
   currentStepNumber++;
-  currentStepNumber %= N_STEPS;
+  currentStepNumber %= 16;
+  std::cout << "seuencer advanced to " << currentStepNumber << std::endl;
+  // emit currentStepChanged(currentStepNumber % 8);
   emit currentStepChanged(currentStepNumber);
 
   // trig envelopes
-  if (steps[currentStepNumber]->active) {
+  if (activeStep[currentStepNumber]) {
     audiothread->osc->ampEnvelope->setValue(1.0);
     audiothread->osc->ampEnvelope->setTarget(0.0);
     audiothread->osc->pitchEnvelope->setValue(1.0);
@@ -29,7 +37,7 @@ void Sequencer::advance() {
     audiothread->osc->fmEnvelope->setValue(1.0);
     audiothread->osc->fmEnvelope->setTarget(0.0);
     // set oscillator
-    updateOsc(currentStepNumber);
+    updateOsc(currentStepNumber % 8);
   }
 
 }

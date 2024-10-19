@@ -28,8 +28,23 @@ file(GLOB STK_SOURCES ${CMAKE_SOURCE_DIR}/../stk/src/*.cpp)
 # Add executable for your project
 add_executable(mega_fm ${SOURCES} ${STK_SOURCES})
 
-# Define the audio API for STK
-target_compile_definitions(mega_fm PRIVATE __LINUX_ALSA__)
+# Platform-specific settings
+if (WIN32)
+    # Define Windows-specific audio API (STK supports DirectSound and WASAPI on Windows)
+    target_compile_definitions(mega_fm PRIVATE __WINDOWS_DS__)  # or __WINDOWS_WASAPI__
+
+    # Link Windows-specific libraries
+    target_link_libraries(mega_fm PRIVATE Qt5::Core Qt5::Widgets dsound pthread)
+else()
+    # Define the audio API for Linux
+    target_compile_definitions(mega_fm PRIVATE __LINUX_ALSA__)
+
+    # Link the ALSA library for Linux
+    target_link_libraries(mega_fm PRIVATE Qt5::Core Qt5::Widgets asound pthread)
+endif()
+
+##### Define the audio API for STK
+#### target_compile_definitions(mega_fm PRIVATE __LINUX_ALSA__)
 
 # Find the Qt libraries
 find_package(Qt5 COMPONENTS Widgets Core REQUIRED)

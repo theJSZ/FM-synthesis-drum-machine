@@ -16,9 +16,12 @@ public:
   void advance();
   int getCurrentStepNumber();
   SequencerStep *steps[16];
+  void toggleActiveStep(int step);
+  bool activeStep[16];
 
 signals:
   void currentStepChanged(int newStepNumber);
+  void stepActiveStatusChanged(int stepNumber, bool on);
 
 private:
   int bpm;

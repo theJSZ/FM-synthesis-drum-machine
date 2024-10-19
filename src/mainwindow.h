@@ -5,10 +5,11 @@
 #include <QGroupBox>
 #include <QList>
 #include <QString>
+#include <QPushButton>
 #include <string>
 #include "audiothread.h"
 #include <math.h>
-#include "clickdetector.h"
+// #include "clickdetector.h"
 #include <random>
 #include <time.h>
 
@@ -23,11 +24,15 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void setStepButtonLight(int step, bool on);
 
 private:
     Ui::MainWindow *ui;
     AudioThread *audioThread;
     void setBackgroundColor(QWidget*, std::string);
     QGroupBox *groupBoxes[16];
+    QPushButton *stepButtons[16];
+    void initializeConnections();
+    void handleStepChanged(int StepNumber);
 };
 #endif // MAINWINDOW_H
