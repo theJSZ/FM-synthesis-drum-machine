@@ -1,6 +1,6 @@
 ## "MEGA_FM"
 
-### FM synthesizer + sequencer
+### A C++ / Synthesis Toolkit / Qt5 FM synthesizer + sequencer
 
 ![Image of program running](./images/mega_fm.jpg)
 
