@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     srand(time(NULL));
 
-
     groupBoxes[0]  = ui->groupBox_1;
     groupBoxes[1]  = ui->groupBox_2;
     groupBoxes[2]  = ui->groupBox_3;
@@ -36,6 +35,22 @@ MainWindow::MainWindow(QWidget *parent)
     stepButtons[13] = ui->btn_step_14;
     stepButtons[14] = ui->btn_step_15;
     stepButtons[15] = ui->btn_step_16;
+    stepButtons[16] = ui->btn_step_17;
+    stepButtons[17] = ui->btn_step_18;
+    stepButtons[18] = ui->btn_step_19;
+    stepButtons[19] = ui->btn_step_20;
+    stepButtons[20] = ui->btn_step_21;
+    stepButtons[21] = ui->btn_step_22;
+    stepButtons[22] = ui->btn_step_23;
+    stepButtons[23] = ui->btn_step_24;
+    stepButtons[24] = ui->btn_step_25;
+    stepButtons[25] = ui->btn_step_26;
+    stepButtons[26] = ui->btn_step_27;
+    stepButtons[27] = ui->btn_step_28;
+    stepButtons[28] = ui->btn_step_29;
+    stepButtons[29] = ui->btn_step_30;
+    stepButtons[30] = ui->btn_step_31;
+    stepButtons[31] = ui->btn_step_32;
 
     audioThread = new AudioThread();
     audioThread->start();
@@ -57,6 +72,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->dial_tempo, &QDial::valueChanged, [=](int value) {
         audioThread->setBpm((float) value);
     });
+
+
 
     ui->dial_master_pitch->setValue(1);
     ui->dial_master_pitch->setValue(0);
@@ -181,6 +198,9 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
+    // connect mutate
+    connect(ui->dial_mutate, &QDial::valueChanged, this, &MainWindow::setMutateAmount);
+
     connect(audioThread->sequencer, &Sequencer::currentStepChanged, this, &MainWindow::handleStepChanged, Qt::UniqueConnection);
 
     connect(audioThread->sequencer, &Sequencer::stepActiveStatusChanged, this, [=](int step, bool on) {
@@ -189,23 +209,27 @@ MainWindow::MainWindow(QWidget *parent)
         else style = "border-radius:3; border: 1px solid black;background-color: gray";
         stepButtons[step]->setStyleSheet(style);
     }, Qt::UniqueConnection);
-
-    // setBackgroundColor(ui->groupBox_2, "pink");
-    // ui->groupBox_11->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_DEFAULT));
-    // ui->groupBox_10->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_DISABLED));
-    // ui->groupBox_9->setStyleSheet(QString::fromStdString(STEP_STYLESHEET_CURRENT));
 }
 
-// void MainWindow::initializeConnections() {
-//     if (audioThread) {
-//         connect(audioThread->sequencer, &Sequencer::currentStepChanged, this, &MainWindow::handleStepChanged, Qt::UniqueConnection);
-//     }
-// }
+void MainWindow::setMutateAmount(int dialValue) {
+    this->mutateAmount = dialValue / 10;
+    std::cout << "mutate at " << this->mutateAmount << std::endl;
+}
 
 void MainWindow::handleStepChanged(int stepNumber) {
+    if (this->mutateAmount) {
+
+    // MUTATION
+    QList<QDial *> dials = groupBoxes[stepNumber % 8]->findChildren<QDial *>();
+        for (int j = 0; j < dials.size()-1; ++j) { // don't mutate probability
+            int randNum = rand()%(dials[j]->maximum() - dials[j]->minimum() + 1) + dials[j]->minimum();
+
+            dials[j]->setValue(randNum);
+        }
+    }
+
     stepButtons[stepNumber]->setStyleSheet(STEP_STYLESHEET_CURRENT);
-    // stepButtons[(stepNumber + 15) % 16]->setStyleSheet(QString("border-radius:3; border: 1px solid black; background-color: gray"));
-    setStepButtonLight((stepNumber + 15) % 16, audioThread->sequencer->activeStep[(stepNumber + 15) % 16]);
+    setStepButtonLight((stepNumber + 31) % 32, audioThread->sequencer->activeStep[(stepNumber + 31) % 32]);
 }
 
 void MainWindow::setStepButtonLight(int step, bool on) {

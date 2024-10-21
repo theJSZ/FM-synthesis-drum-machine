@@ -9,8 +9,8 @@
   - 2 sine wave oscillators
   - Osc 1 is heard, osc 2 modulates the phase of osc 1
 - Sequencer:
-  - 16 steps
-  - Parameters for steps 1 and 9, 2 and 10, etc. are the same, so in effect you have an eight step pattern with some added variety through the 16 trig switches
+  - 32 steps
+  - Parameters for steps 1 9 17 25, 2 10 18 26, etc. are the same, so in effect you have an eight step pattern with some added variety through the 16 trig switches
 - Reverb:
   - Mono reverb, uses the STK Freeverb class. Sounds really nice
 

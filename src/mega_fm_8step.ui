@@ -20,7 +20,7 @@
       <x>120</x>
       <y>133</y>
       <width>41</width>
-      <height>501</height>
+      <height>541</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -221,7 +221,7 @@
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>457</y>
+       <y>500</y>
        <width>31</width>
        <height>41</height>
       </rect>
@@ -233,6 +233,38 @@
       <number>100</number>
      </property>
     </widget>
+    <widget class="QPushButton" name="btn_step_17">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>464</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_step_25">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>486</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_labels">
     <property name="geometry">
@@ -240,7 +272,7 @@
       <x>20</x>
       <y>133</y>
       <width>91</width>
-      <height>501</height>
+      <height>541</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -397,7 +429,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>423</y>
+       <y>441</y>
        <width>67</width>
        <height>21</height>
       </rect>
@@ -413,7 +445,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>468</y>
+       <y>510</y>
        <width>67</width>
        <height>21</height>
       </rect>
@@ -432,7 +464,7 @@
       <x>240</x>
       <y>133</y>
       <width>41</width>
-      <height>501</height>
+      <height>541</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -633,7 +665,7 @@
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>457</y>
+       <y>500</y>
        <width>31</width>
        <height>41</height>
       </rect>
@@ -645,6 +677,38 @@
       <number>100</number>
      </property>
     </widget>
+    <widget class="QPushButton" name="btn_step_20">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>464</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_step_28">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>486</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_5">
     <property name="geometry">
@@ -652,7 +716,7 @@
       <x>290</x>
       <y>133</y>
       <width>41</width>
-      <height>501</height>
+      <height>541</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -853,7 +917,7 @@
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>457</y>
+       <y>500</y>
        <width>31</width>
        <height>41</height>
       </rect>
@@ -865,6 +929,38 @@
       <number>100</number>
      </property>
     </widget>
+    <widget class="QPushButton" name="btn_step_21">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>464</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_step_29">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>486</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_6">
     <property name="geometry">
@@ -872,7 +968,7 @@
       <x>330</x>
       <y>133</y>
       <width>41</width>
-      <height>501</height>
+      <height>541</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1073,7 +1169,7 @@
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>457</y>
+       <y>500</y>
        <width>31</width>
        <height>41</height>
       </rect>
@@ -1085,6 +1181,38 @@
       <number>100</number>
      </property>
     </widget>
+    <widget class="QPushButton" name="btn_step_22">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>464</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_step_30">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>486</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_7">
     <property name="geometry">
@@ -1092,7 +1220,7 @@
       <x>370</x>
       <y>133</y>
       <width>41</width>
-      <height>501</height>
+      <height>541</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1293,7 +1421,7 @@
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>457</y>
+       <y>500</y>
        <width>31</width>
        <height>41</height>
       </rect>
@@ -1305,6 +1433,38 @@
       <number>100</number>
      </property>
     </widget>
+    <widget class="QPushButton" name="btn_step_23">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>464</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_step_31">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>486</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_8">
     <property name="geometry">
@@ -1312,7 +1472,7 @@
       <x>410</x>
       <y>133</y>
       <width>41</width>
-      <height>501</height>
+      <height>541</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1513,7 +1673,7 @@
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>457</y>
+       <y>500</y>
        <width>31</width>
        <height>41</height>
       </rect>
@@ -1525,6 +1685,38 @@
       <number>100</number>
      </property>
     </widget>
+    <widget class="QPushButton" name="btn_step_24">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>464</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_step_32">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>486</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
@@ -1532,7 +1724,7 @@
       <x>160</x>
       <y>133</y>
       <width>41</width>
-      <height>501</height>
+      <height>541</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1733,7 +1925,7 @@
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>457</y>
+       <y>500</y>
        <width>31</width>
        <height>41</height>
       </rect>
@@ -1745,6 +1937,38 @@
       <number>100</number>
      </property>
     </widget>
+    <widget class="QPushButton" name="btn_step_18">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>464</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_step_26">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>486</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_3">
     <property name="geometry">
@@ -1752,7 +1976,7 @@
       <x>200</x>
       <y>133</y>
       <width>41</width>
-      <height>501</height>
+      <height>541</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1953,7 +2177,7 @@
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>457</y>
+       <y>500</y>
        <width>31</width>
        <height>41</height>
       </rect>
@@ -1963,6 +2187,38 @@
      </property>
      <property name="maximum">
       <number>100</number>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_step_19">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>464</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_step_27">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>486</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius:3; border: 1px solid black;</string>
+     </property>
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </widget>
@@ -2165,7 +2421,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>644</y>
+       <y>680</y>
        <width>331</width>
        <height>101</height>
       </rect>
@@ -2307,7 +2563,7 @@
      <property name="geometry">
       <rect>
        <x>350</x>
-       <y>644</y>
+       <y>680</y>
        <width>101</width>
        <height>101</height>
       </rect>

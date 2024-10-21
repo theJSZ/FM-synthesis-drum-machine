@@ -31,8 +31,10 @@ private:
     AudioThread *audioThread;
     void setBackgroundColor(QWidget*, std::string);
     QGroupBox *groupBoxes[16];
-    QPushButton *stepButtons[16];
+    QPushButton *stepButtons[32];
     void initializeConnections();
     void handleStepChanged(int StepNumber);
+    int mutateAmount;
+    void setMutateAmount(int dialValue);
 };
 #endif // MAINWINDOW_H

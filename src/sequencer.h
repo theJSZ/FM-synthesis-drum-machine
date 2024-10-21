@@ -15,9 +15,9 @@ public:
   ~Sequencer();
   void advance();
   int getCurrentStepNumber();
-  SequencerStep *steps[16];
+  SequencerStep *steps[32];
   void toggleActiveStep(int step);
-  bool activeStep[16];
+  bool activeStep[32];
 
 signals:
   void currentStepChanged(int newStepNumber);

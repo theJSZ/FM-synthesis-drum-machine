@@ -23,7 +23,7 @@ void Sequencer::toggleActiveStep(int step) {
 
 void Sequencer::advance() {
   currentStepNumber++;
-  currentStepNumber %= 16;
+  currentStepNumber %= 32;
   emit currentStepChanged(currentStepNumber);
 
   bool playStep = activeStep[currentStepNumber];
