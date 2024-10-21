@@ -218,15 +218,25 @@ void MainWindow::setMutateAmount(int dialValue) {
 
 void MainWindow::handleStepChanged(int stepNumber) {
     if (this->mutateAmount) {
+        float mutateMultiplier = (float) mutateAmount / 500.0;
+        // MUTATION
+        QList<QDial *> dials = groupBoxes[stepNumber % 8]->findChildren<QDial *>();
+            for (int j = 0; j < dials.size()-1; ++j) { // don't mutate probability
+                int minimum = -1 * dials[j]->value() - dials[j]->minimum();
+                int maximum = dials[j]->maximum() - dials[j]->value();
 
-    // MUTATION
-    QList<QDial *> dials = groupBoxes[stepNumber % 8]->findChildren<QDial *>();
-        for (int j = 0; j < dials.size()-1; ++j) { // don't mutate probability
-            int randNum = rand()%(dials[j]->maximum() - dials[j]->minimum() + 1) + dials[j]->minimum();
+                // int randNum = rand()%(dials[j]->maximum() - dials[j]->minimum() + 1) + dials[j]->minimum();
+                int randNum = rand()%(maximum - minimum + 1) + minimum;
 
-            dials[j]->setValue(randNum);
-        }
+                dials[j]->setValue((float) randNum * mutateMultiplier + (float) dials[j]->value() * (1.0 - mutateMultiplier));
+            }
     }
+
+/*
+If mutate amount == 100, use 1 * randnum + 0 * value
+If mutate amount == 50,  use 0.5 * randnum + 0.5 * value ?
+If mutate amount == 10,  use 0.1 * randnum + 0.9 * value ?
+*/
 
     stepButtons[stepNumber]->setStyleSheet(STEP_STYLESHEET_CURRENT);
     setStepButtonLight((stepNumber + 31) % 32, audioThread->sequencer->activeStep[(stepNumber + 31) % 32]);
