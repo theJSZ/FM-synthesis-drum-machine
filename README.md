@@ -31,9 +31,11 @@ Each of the 8 steps has:
 - **Steps** two step buttons controlling whether the sound will trigger by default or not
 - **%** which introduces random variation to the step trigges. % at zero means the sound will trig if and only if the step button is active. % at full means the step will trig with a probability of 0.5 regardless of the step button status
 
-Additionally, there are **master controls** for pitch, FM amount (not implemented) and volume. Also controls for tempo and reverb parameters which do what you would expect. Tempo can be set in the range [60, 180] bpm. The **Mutate** control is not yet implemented to do anything
+Additionally, there are **master controls** for pitch, FM amount (not implemented) and volume. Also controls for tempo and reverb parameters which do what you would expect. Tempo can be set in the range [60, 180] bpm.
+
+The **Mutate** control changes dial values randomly as the sequence plays.
 
 ### TODO:
 - Add STK as submodule?
-- Implement **Mutate** so that it will change parameters by a random amount each time a step is passed. There should be a way to "lock" steps that are not wanted to mutate
-- Implement sound saving and loading. It should work like this: Right click on the dial strip brings up a context menu with the options to save and load. Choose save -> prompt for sound name, save sound. Choose load -> display saved sounds, select one, the step is set to those parameters. Perhaps also have categories of sounds such as "bass drum", "perc", "snare" etc
+- "Mutate lock" for steps / parameters that are not wanted to mutate
+- Sound saving and loading. It should work like this: Right click on the dial strip brings up a context menu with the options to save and load. Choose save -> prompt for sound name, save sound. Choose load -> display saved sounds, select one, the step is set to those parameters. Perhaps also have categories of sounds such as "bass drum", "perc", "snare" etc
