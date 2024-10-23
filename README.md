@@ -9,7 +9,7 @@
   - 8 voices of 2 operator FM
 - Sequencer:
   - 32 steps
-  - Parameters for steps 1 9 17 25, 2 10 18 26, etc. are the same, so in effect you have an eight step pattern with some added variety through the 16 trig switches
+  - Parameters for steps 1 9 17 25, 2 10 18 26, etc. are the same, so in effect you have an eight step pattern with some added variety through the 32 trig switches
 - Reverb:
   - Mono reverb
 
