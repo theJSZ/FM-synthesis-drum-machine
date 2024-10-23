@@ -6,19 +6,18 @@
 
 #### Features:
 - Tone generator:
-  - 2 sine wave oscillators
-  - Osc 1 is heard, osc 2 modulates the phase of osc 1
+  - 8 voices of 2 operator FM
 - Sequencer:
   - 32 steps
   - Parameters for steps 1 9 17 25, 2 10 18 26, etc. are the same, so in effect you have an eight step pattern with some added variety through the 16 trig switches
 - Reverb:
-  - Mono reverb, uses the STK Freeverb class. Sounds really nice
+  - Mono reverb
 
 See it in action on YouTube: [Example 1](https://youtu.be/nPyFqWjyMAo ) [Example 2](https://youtu.be/j0YUTtWCITk)
 
 #### Controls:
 
-Each of the 8 steps has:
+Each of the 8 voices has:
 - **Pitch** sets the base pitch for the oscillators
 - **Ramp** sets the pitch envelope amount. The envelope is a simple decay envelope, always starting at max value
 - **Decay (blue)** sets the pitch envelope decay time
@@ -36,6 +35,8 @@ Additionally, there are **master controls** for pitch, FM amount (not implemente
 The **Mutate** control changes dial values randomly as the sequence plays.
 
 ### TODO:
+- MIDI clock input
+- Swing
 - Add STK as submodule?
 - "Mutate lock" for steps / parameters that are not wanted to mutate
 - Sound saving and loading. It should work like this: Right click on the dial strip brings up a context menu with the options to save and load. Choose save -> prompt for sound name, save sound. Choose load -> display saved sounds, select one, the step is set to those parameters. Perhaps also have categories of sounds such as "bass drum", "perc", "snare" etc

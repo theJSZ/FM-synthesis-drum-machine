@@ -21,7 +21,6 @@ FMOsc::FMOsc() :
     ampEnvelope2->setAllTimes(0.01, 0.01, 0.0, 0.001);
     fmEnvelope->setAllTimes(0.001, 1, 0.0, 0.001);
     ampEnvelope->setAllTimes(0.001, 1, 0.0, 0.001);
-    std::cout << "oscillator created" << std::endl;
   }
 FMOsc::~FMOsc() {}
 

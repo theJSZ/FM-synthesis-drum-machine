@@ -14,7 +14,8 @@ set(SOURCES
     src/audiothread.cpp
     src/fmosc.cpp
     src/sequencer.cpp
-    src/clickdetector.cpp
+    src/eightVoices.cpp
+    #src/clickdetector.cpp
     # Your project source files
     # Add more source files here if needed
 )

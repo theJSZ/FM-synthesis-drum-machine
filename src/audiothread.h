@@ -1,22 +1,28 @@
 #ifndef AUDIOTHREAD_H
 #define AUDIOTHREAD_H
 
-#include <QThread>
-#include <RtAudio.h>
 #include <stdio.h>
+
+#include <QThread>
+
+#include <RtAudio.h>
 #include <Stk.h>
 #include <ADSR.h>
+#include <FreeVerb.h>
+
 #include "sequencer.h"
 #include "fmosc.h"
 #include "constants.h"
-#include <FreeVerb.h>
+#include "eightVoices.h"
 
 class Sequencer;
 class AudioThread : public QThread {
 public:
 	AudioThread();
 	~AudioThread();
-	FMOsc *osc;
+	// FMOsc *osc;
+	EightVoices *voices;
+
 
 	// stk::ADSR *fmEnvelope;
 	// stk::ADSR *ampEnvelope;

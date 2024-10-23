@@ -3,7 +3,8 @@
 AudioThread::AudioThread() :
   bpm(160),
   sequencer(new Sequencer(this)),
-  osc(new FMOsc),
+  // osc(new FMOsc),
+  voices(new EightVoices()),
   reverb(new stk::FreeVerb()),
   reverbMix(0.5),
   masterVolume(1.0)
@@ -60,7 +61,8 @@ int AudioThread::audioCallback(void *outputBuffer, void *inputBuffer,
 
   for (unsigned int i = 0; i < nBufferFrames; ++i) {
     sampleCounter++;
-    buffer[i] = audioThread->osc->tick();
+    // buffer[i] = audioThread->osc->tick();
+    buffer[i] = audioThread->voices->tick();
     buffer[i] += audioThread->reverbMix * audioThread->reverb->tick(buffer[i], 0);
     double L = 0.5;
     buffer[i] = L * (tanh(buffer[i])/L);

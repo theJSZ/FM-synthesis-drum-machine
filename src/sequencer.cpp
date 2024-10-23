@@ -7,9 +7,8 @@ Sequencer::Sequencer(AudioThread* audioThread) :
   activeStep{0}
 
   {
-    for (int i = 0; i < 16; ++i) {
+    for (int i = 0; i < 8; ++i) {
       steps[i] = new SequencerStep;
-      std::cout << i << std::endl;
     }
     std::cout << "sequencer created" << std::endl;
   }
@@ -33,12 +32,12 @@ void Sequencer::advance() {
 
   // trig envelopes
   if (playStep) {
-    audiothread->osc->ampEnvelope->setValue(1.0);
-    audiothread->osc->ampEnvelope->setTarget(0.0);
-    audiothread->osc->pitchEnvelope->setValue(1.0);
-    audiothread->osc->pitchEnvelope->setTarget(0.0);
-    audiothread->osc->fmEnvelope->setValue(1.0);
-    audiothread->osc->fmEnvelope->setTarget(0.0);
+    audiothread->voices->voices[currentStepNumber % 8]->ampEnvelope->setValue(1.0);
+    audiothread->voices->voices[currentStepNumber % 8]->ampEnvelope->setTarget(0.0);
+    audiothread->voices->voices[currentStepNumber % 8]->pitchEnvelope->setValue(1.0);
+    audiothread->voices->voices[currentStepNumber % 8]->pitchEnvelope->setTarget(0.0);
+    audiothread->voices->voices[currentStepNumber % 8]->fmEnvelope->setValue(1.0);
+    audiothread->voices->voices[currentStepNumber % 8]->fmEnvelope->setTarget(0.0);
     // set oscillator
     updateOsc(currentStepNumber % 8);
   }
@@ -50,7 +49,7 @@ int Sequencer::getCurrentStepNumber() {
 }
 
 void Sequencer::updateOsc(int stepNumber) {
-  FMOsc *osc = audiothread->osc;
+  FMOsc *osc = audiothread->voices->voices[stepNumber];
   SequencerStep *step = steps[stepNumber];
 
   osc->setFrequencyMultiplier(step->frequencyMultiplier);

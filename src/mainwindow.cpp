@@ -60,7 +60,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->dial_master_pitch, &QDial::valueChanged, [=](int dialValue) {
         float scaledDialValue = (float) dialValue / 500; // -1 .. 1
         scaledDialValue += 1.5;   //  0.5 .. 2.5
-        audioThread->osc->setMasterFrequencyMultiplier(scaledDialValue);
+        for (int i = 0; i < 8; ++i) {
+            audioThread->voices->voices[i]->setMasterFrequencyMultiplier(scaledDialValue);
+        }
     });
 
     // connect master volume
