@@ -26,9 +26,7 @@ FMOsc::FMOsc() :
 FMOsc::~FMOsc() {}
 
 void FMOsc::setFrequencyMultiplier(float frequencyMultiplier) {
-  // carrier->setFrequency(frequency);
   this->frequencyMultiplier = frequencyMultiplier;
-  // modulator->setFrequency(fmFrequencyMultiplier * frequency);
 }
 
 void FMOsc::setRampAmount(float rampAmount) {
@@ -36,7 +34,6 @@ void FMOsc::setRampAmount(float rampAmount) {
 }
 
 void FMOsc::setRampDecay(float rampDecay) {
-  // this->rampDecay = rampDecay;
   pitchEnvelope->setDecayTime(rampDecay);
 }
 

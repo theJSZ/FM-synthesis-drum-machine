@@ -7,13 +7,7 @@ AudioThread::AudioThread() :
   reverb(new stk::FreeVerb()),
   reverbMix(0.5),
   masterVolume(1.0)
-  // ampEnvelope(new stk::ADSR),
-  // fmEnvelope(new stk::ADSR)
   {
-    // ampEnvelope->setAllTimes(0.001, 1, 0.0, 0.001);
-    // osc->setVolume(1.0);
-    // osc->setFmAmount(0.0);
-    // osc->setFrequency(200.0);
   }
 
 AudioThread::~AudioThread() {
@@ -35,23 +29,19 @@ unsigned int AudioThread::getSampleRate() {
 }
 
 void AudioThread::setReverbMix(float mix) {
-  std::cout << "reverb mix: " << mix << std::endl;
   reverbMix = mix;
 }
 
 void AudioThread::setReverbDamp(float damp) {
-  std::cout << "reverb damping: " << damp << std::endl;
   reverb->setDamping(damp);
 }
 
 void AudioThread::setReverbRoomSize(float size) {
-  std::cout << "reverb room size: " << size << std::endl;
   reverb->setRoomSize(size);
 }
 
 void AudioThread::setMasterVolume(float volume) {
   masterVolume = volume*volume;
-  std::cout << "master volume: " << masterVolume << std::endl;
 }
 
 int AudioThread::audioCallback(void *outputBuffer, void *inputBuffer,
@@ -66,21 +56,21 @@ int AudioThread::audioCallback(void *outputBuffer, void *inputBuffer,
   float bpm = audioThread->getBpm();
   float samplesPer16thNote = (SAMPLERATE * 60.0) / (bpm * 4.0);
 
+  static int evenstep = 1;
+
   for (unsigned int i = 0; i < nBufferFrames; ++i) {
+    sampleCounter++;
     buffer[i] = audioThread->osc->tick();
     buffer[i] += audioThread->reverbMix * audioThread->reverb->tick(buffer[i], 0);
-    // // processing
-    sampleCounter++;
-    // buffer[i] = audioThread->osc->tick(); // * audioThread->ampEnvelope->tick();
     double L = 0.5;
     buffer[i] = L * (tanh(buffer[i])/L);
     buffer[i] = L * (tanh(buffer[i])/L);
-    buffer[i] = buffer[i] * audioThread->masterVolume;
+    buffer[i] *= audioThread->masterVolume;
 
     // // sequencer
     if (sampleCounter >= samplesPer16thNote) {
-      // std::cout << "next step!" << std::endl;
       sampleCounter = 0;
+      evenstep *= -1;
       audioThread->sequencer->advance();
     }
   }
@@ -105,13 +95,4 @@ void AudioThread::run() {
     std::cout << "could not start audio stream" << std::endl;
     exit(1);
   }
-
-  // try {
-  //   exec();
-  // } catch (std::exception& e) {
-  //   std::cerr << "Exception caught: " << e.what() << std::endl;
-  // } catch (...) {
-  //   std::cerr << "Unknown exception caught" << std::endl;
-  // }
-  // exec();
 }

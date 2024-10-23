@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , audioThread(nullptr)
     , groupBoxes()
+    , mutateAmount(0)
 {
     ui->setupUi(this);
     srand(time(NULL));
@@ -64,7 +65,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     // connect master volume
     connect(ui->dial_master_volume, &QDial::valueChanged, [=](int value) {
-        std::cout << "master volume dial at " << value << std::endl;
         audioThread->setMasterVolume((float) value / 1000);
     });
 
@@ -77,6 +77,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->dial_master_pitch->setValue(1);
     ui->dial_master_pitch->setValue(0);
+    ui->dial_mutate->setValue(0);
 
     // connect reverb mix
     connect(ui->dial_reverb_mix, &QDial::valueChanged, [=](int value) {
@@ -219,7 +220,7 @@ void MainWindow::handleStepChanged(int stepNumber) {
     if (this->mutateAmount) {
 
         // MUTATION
-        QList<QDial *> dials = groupBoxes[stepNumber % 8]->findChildren<QDial *>();
+        QList<QDial *> dials = groupBoxes[(stepNumber+1) % 8]->findChildren<QDial *>();
             for (int j = 0; j < dials.size()-1; ++j) { // don't mutate probability
                 if (j == dials.size() - 4) continue; // don't mutate fb
                 int minimum = dials[j]->minimum();
@@ -229,7 +230,6 @@ void MainWindow::handleStepChanged(int stepNumber) {
 
                 int diff = randNum - currentValue;
                 int newValue = (int) currentValue + diff * ((float) mutateAmount / 1000);
-                // std::cout << newValue << std::endl;
                 dials[j]->setValue(newValue);
             }
     }
