@@ -37,6 +37,7 @@ public:
 	void setReverbRoomSize(float damp);
 
 	void setMasterVolume(float volume);
+	void setSwing(int swing);
 
 protected:
 	void run() override;
@@ -52,6 +53,7 @@ private:
 	unsigned int sampleRate = SAMPLERATE;
 	unsigned int bufferFrames = BUFFER_FRAMES;
 	float bpm;
+	int swing;
 
 	stk::FreeVerb *reverb;
 	float reverbMix;

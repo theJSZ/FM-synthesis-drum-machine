@@ -25,23 +25,26 @@ void Sequencer::advance() {
   currentStepNumber %= 32;
   emit currentStepChanged(currentStepNumber);
 
-  bool playStep = activeStep[currentStepNumber];
+  bool shouldPlayStep = activeStep[currentStepNumber];
   if (rand() % 100 < steps[currentStepNumber % 8]->randomness) {
-    playStep = !playStep;
+    shouldPlayStep = !shouldPlayStep;
   }
 
-  // trig envelopes
-  if (playStep) {
-    audiothread->voices->voices[currentStepNumber % 8]->ampEnvelope->setValue(1.0);
-    audiothread->voices->voices[currentStepNumber % 8]->ampEnvelope->setTarget(0.0);
-    audiothread->voices->voices[currentStepNumber % 8]->pitchEnvelope->setValue(1.0);
-    audiothread->voices->voices[currentStepNumber % 8]->pitchEnvelope->setTarget(0.0);
-    audiothread->voices->voices[currentStepNumber % 8]->fmEnvelope->setValue(1.0);
-    audiothread->voices->voices[currentStepNumber % 8]->fmEnvelope->setTarget(0.0);
+  if (shouldPlayStep) {
+    playStep(currentStepNumber);
+  }
+}
+
+void Sequencer::playStep(int step) {
     // set oscillator
-    updateOsc(currentStepNumber % 8);
-  }
+    updateOsc(step % 8);
 
+    audiothread->voices->voices[step % 8]->ampEnvelope->setValue(1.0);
+    audiothread->voices->voices[step % 8]->ampEnvelope->setTarget(0.0);
+    audiothread->voices->voices[step % 8]->pitchEnvelope->setValue(1.0);
+    audiothread->voices->voices[step % 8]->pitchEnvelope->setTarget(0.0);
+    audiothread->voices->voices[step % 8]->fmEnvelope->setValue(1.0);
+    audiothread->voices->voices[step % 8]->fmEnvelope->setTarget(0.0);
 }
 
 int Sequencer::getCurrentStepNumber() {

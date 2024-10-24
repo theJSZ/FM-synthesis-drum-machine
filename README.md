@@ -30,7 +30,7 @@ Each of the 8 voices has:
 - **Steps** two step buttons controlling whether the sound will trigger by default or not
 - **%** which introduces random variation to the step trigges. % at zero means the sound will trig if and only if the step button is active. % at full means the step will trig with a probability of 0.5 regardless of the step button status
 
-Additionally, there are **master controls** for pitch, FM amount (not implemented) and volume. Also controls for tempo and reverb parameters which do what you would expect. Tempo can be set in the range [60, 180] bpm.
+Additionally, there are **master controls** for pitch and volume. Also controls for tempo, swing and reverb parameters which do what you would expect. Tempo can be set in the range [60, 180] bpm.
 
 The **Mutate** control changes dial values randomly as the sequence plays.
 

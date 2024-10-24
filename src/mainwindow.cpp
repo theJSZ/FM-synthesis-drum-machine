@@ -70,6 +70,11 @@ MainWindow::MainWindow(QWidget *parent)
         audioThread->setMasterVolume((float) value / 1000);
     });
 
+    // connect swin
+    connect(ui->dial_swing, &QDial::valueChanged, [=](int value) {
+        audioThread->setSwing(value / 2);
+    });
+
     // connect tempo
     connect(ui->dial_tempo, &QDial::valueChanged, [=](int value) {
         audioThread->setBpm((float) value);

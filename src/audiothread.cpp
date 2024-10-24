@@ -3,7 +3,6 @@
 AudioThread::AudioThread() :
   bpm(160),
   sequencer(new Sequencer(this)),
-  // osc(new FMOsc),
   voices(new EightVoices()),
   reverb(new stk::FreeVerb()),
   reverbMix(0.5),
@@ -12,8 +11,6 @@ AudioThread::AudioThread() :
   }
 
 AudioThread::~AudioThread() {
-  reverb->setRoomSize(1);
-  reverb->setDamping(1);
 }
 
 float AudioThread::getBpm() {
@@ -22,7 +19,7 @@ float AudioThread::getBpm() {
 
 void AudioThread::setBpm(float bpm) {
   this->bpm = bpm;
-  std::cout << this->bpm << std::endl;
+  std::cout << "BPM: " << this->bpm << std::endl;
 }
 
 unsigned int AudioThread::getSampleRate() {
@@ -30,7 +27,8 @@ unsigned int AudioThread::getSampleRate() {
 }
 
 void AudioThread::setReverbMix(float mix) {
-  reverbMix = mix;
+  // reverbMix = mix;
+  reverb->setEffectMix(mix);
 }
 
 void AudioThread::setReverbDamp(float damp) {
@@ -45,6 +43,10 @@ void AudioThread::setMasterVolume(float volume) {
   masterVolume = volume*volume;
 }
 
+void AudioThread::setSwing(int swing) {
+  this->swing = swing;
+}
+
 int AudioThread::audioCallback(void *outputBuffer, void *inputBuffer,
   unsigned int nBufferFrames, double streamTime,
   RtAudioStreamStatus status, void *userData)
@@ -57,20 +59,21 @@ int AudioThread::audioCallback(void *outputBuffer, void *inputBuffer,
   float bpm = audioThread->getBpm();
   float samplesPer16thNote = (SAMPLERATE * 60.0) / (bpm * 4.0);
 
+  // this will be useful when swing is implemented
   static int evenstep = 1;
 
   for (unsigned int i = 0; i < nBufferFrames; ++i) {
     sampleCounter++;
-    // buffer[i] = audioThread->osc->tick();
     buffer[i] = audioThread->voices->tick();
-    buffer[i] += audioThread->reverbMix * audioThread->reverb->tick(buffer[i], 0);
+
+    buffer[i] = audioThread->reverb->tick(buffer[i], 0);
     double L = 0.5;
     buffer[i] = L * (tanh(buffer[i])/L);
     buffer[i] = L * (tanh(buffer[i])/L);
     buffer[i] *= audioThread->masterVolume;
 
     // // sequencer
-    if (sampleCounter >= samplesPer16thNote) {
+    if (sampleCounter >= samplesPer16thNote + evenstep * (((float) audioThread->swing / 1000) * samplesPer16thNote)) {
       sampleCounter = 0;
       evenstep *= -1;
       audioThread->sequencer->advance();

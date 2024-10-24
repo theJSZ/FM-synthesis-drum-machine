@@ -28,6 +28,7 @@ private:
   AudioThread* audiothread;
   int currentStepNumber;
   void updateOsc(int step);
+  void playStep(int step);
 };
 
 #endif
