@@ -36,7 +36,6 @@ The **Mutate** control changes dial values randomly as the sequence plays.
 
 ### TODO:
 - MIDI clock input
-- Swing
 - Add STK as submodule?
 - "Mutate lock" for steps / parameters that are not wanted to mutate
 - Sound saving and loading. It should work like this: Right click on the dial strip brings up a context menu with the options to save and load. Choose save -> prompt for sound name, save sound. Choose load -> display saved sounds, select one, the step is set to those parameters. Perhaps also have categories of sounds such as "bass drum", "perc", "snare" etc
