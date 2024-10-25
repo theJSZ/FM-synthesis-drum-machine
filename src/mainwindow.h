@@ -52,5 +52,8 @@ private:
     void setMutateAmount(int dialValue);
     void shiftPattern(int shiftAmount);
     void updateLayout();
+
+    void savePattern(int slot);
+    void loadPattern(int slot);
 };
 #endif // MAINWINDOW_H

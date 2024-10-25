@@ -8,6 +8,7 @@
 #include "sequencerStep.h"
 #include "audiothread.h"
 #include "mainwindow.h"
+#include "pattern.h"
 
 class MainWindow;
 class AudioThread;
@@ -22,6 +23,7 @@ public:
   SequencerStep *steps[32];
   void toggleActiveStep(int step);
   bool activeStep[32];
+  Pattern *patterns[8];
 
 // public slots:
 //   void onKeyPressed(QKeyEvent *event);

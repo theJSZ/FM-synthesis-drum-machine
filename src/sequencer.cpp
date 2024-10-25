@@ -10,6 +10,7 @@ Sequencer::Sequencer(AudioThread* audioThread, MainWindow* mainWindow) :
   {
     for (int i = 0; i < 8; ++i) {
       steps[i] = new SequencerStep();
+      patterns[i] = new Pattern();
     }
     std::cout << "sequencer created" << std::endl;
   }

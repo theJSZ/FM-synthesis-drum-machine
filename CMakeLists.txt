@@ -15,6 +15,7 @@ set(SOURCES
     src/fmosc.cpp
     src/sequencer.cpp
     src/eightVoices.cpp
+    src/pattern.cpp
     #src/clickdetector.cpp
     # Your project source files
     # Add more source files here if needed

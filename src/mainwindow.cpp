@@ -241,21 +241,53 @@ void MainWindow::setBackgroundColor(QWidget* element, std::string color) {
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
-    switch (event->key())
-    {
-    case 57:  // key 9
-        std::cout << "9" << std::endl;
-        break;
+    // 49 is 1. 33 is shift+1
+    if (event->key() >= 33 && event->key() <= 40) {
+        loadPattern(event->key() - 33);
+    }
+    if (event->key() == 164) loadPattern(3);
+    if (event->key() == 47) loadPattern(6);
 
-    case 48:  // key 0
-        std::cout << "0" << std::endl;
-        shiftPattern(1);
-        break;
-
-    default:
-        break;
+    if (event->key() >= 49 && event->key() <= 56) {
+        savePattern(event->key() - 49);
     }
 }
+
+void MainWindow::savePattern(int slot) {
+    std::cout << "saving to slot " << slot << std::endl;
+    int i = 0;
+    int parameters[14*8];
+
+    for (auto groupBox : groupBoxes) {
+        QList<QDial *> dials = groupBox->findChildren<QDial *>();
+        for (auto dial : dials) {
+            parameters[i++] = dial->value();
+        }
+    }
+    for (auto step : audioThread->sequencer->activeStep) {
+        parameters[i++] = (int) step;
+    }
+    audioThread->sequencer->patterns[slot]->setPatternParameters(parameters);
+}
+
+void MainWindow::loadPattern(int slot) {
+    std::cout << "loading from slot " << slot << std::endl;
+    int *parameters = audioThread->sequencer->patterns[slot]->getPatternParameters();
+    int i = 0;
+    for (auto groupBox : groupBoxes) {
+        QList<QDial *> dials = groupBox->findChildren<QDial *>();
+        for (auto dial : dials) {
+            dial->setValue(parameters[i++]);
+        }
+    }
+    for (int step = 0; step < 32; ++step) {
+        audioThread->sequencer->activeStep[step] = parameters[i++];
+        setStepButtonLight(step, audioThread->sequencer->activeStep[step]);
+    }
+
+}
+
+
 
 // all this stuff not working yet
 void MainWindow::shiftPattern(int shiftAmount) {
