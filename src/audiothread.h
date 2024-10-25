@@ -10,22 +10,22 @@
 #include <ADSR.h>
 #include <FreeVerb.h>
 
+#include <SDL2/SDL.h>
+
 #include "sequencer.h"
 #include "fmosc.h"
 #include "constants.h"
 #include "eightVoices.h"
+#include "mainwindow.h"
 
 class Sequencer;
+class MainWindow;
 class AudioThread : public QThread {
+	Q_OBJECT
 public:
-	AudioThread();
+	AudioThread(MainWindow *mainWindow, QObject *parent = nullptr);
 	~AudioThread();
-	// FMOsc *osc;
 	EightVoices *voices;
-
-
-	// stk::ADSR *fmEnvelope;
-	// stk::ADSR *ampEnvelope;
 
 	unsigned int getSampleRate();
 	float getBpm();
@@ -58,6 +58,7 @@ private:
 	stk::FreeVerb *reverb;
 	float reverbMix;
 	float masterVolume;
+
 };
 
 #endif

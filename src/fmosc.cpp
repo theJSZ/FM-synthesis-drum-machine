@@ -8,6 +8,7 @@ FMOsc::FMOsc() :
   rampDecay(0.001),
   fmAmount(0.0),
   fmFrequencyMultiplier(1.0),
+  masterFrequencyMultiplier(1.0),
   fmDecay(0.001),
   fmFeedback(0.0),
   aegDecay(0.001),

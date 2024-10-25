@@ -162,9 +162,10 @@ public:
     QDial *dial_tempo;
     QLabel *label_master_pitch;
     QLabel *label_master_volume;
-    QLabel *label_master_volume_2;
+    QLabel *label_tempo;
     QDial *dial_swing;
     QLabel *label_swing;
+    QLabel *label_tempo_numeric;
     QGroupBox *groupBox;
     QGroupBox *groupBox_master_controls_2;
     QDial *dial_reverb_mix;
@@ -855,10 +856,10 @@ public:
         label_master_volume->setObjectName(QString::fromUtf8("label_master_volume"));
         label_master_volume->setGeometry(QRect(120, 70, 81, 21));
         label_master_volume->setStyleSheet(QString::fromUtf8("border: 1px solid black; background-color:lightgray;"));
-        label_master_volume_2 = new QLabel(groupBox_master_controls);
-        label_master_volume_2->setObjectName(QString::fromUtf8("label_master_volume_2"));
-        label_master_volume_2->setGeometry(QRect(340, 70, 81, 21));
-        label_master_volume_2->setStyleSheet(QString::fromUtf8("border: 1px solid black; background-color: mediumaquamarine"));
+        label_tempo = new QLabel(groupBox_master_controls);
+        label_tempo->setObjectName(QString::fromUtf8("label_tempo"));
+        label_tempo->setGeometry(QRect(340, 70, 81, 21));
+        label_tempo->setStyleSheet(QString::fromUtf8("border: 1px solid black; background-color: mediumaquamarine"));
         dial_swing = new QDial(groupBox_master_controls);
         dial_swing->setObjectName(QString::fromUtf8("dial_swing"));
         dial_swing->setGeometry(QRect(240, 10, 61, 61));
@@ -869,6 +870,10 @@ public:
         label_swing->setObjectName(QString::fromUtf8("label_swing"));
         label_swing->setGeometry(QRect(230, 70, 81, 21));
         label_swing->setStyleSheet(QString::fromUtf8("border: 1px solid black; background-color:mediumaquamarine;"));
+        label_tempo_numeric = new QLabel(groupBox_master_controls);
+        label_tempo_numeric->setObjectName(QString::fromUtf8("label_tempo_numeric"));
+        label_tempo_numeric->setGeometry(QRect(305, 30, 51, 21));
+        label_tempo_numeric->setStyleSheet(QString::fromUtf8("border: 1px solid black; background-color: white"));
         groupBox = new QGroupBox(centralwidget);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         groupBox->setGeometry(QRect(0, 0, 471, 811));
@@ -1003,8 +1008,9 @@ public:
         groupBox_master_controls->setTitle(QString());
         label_master_pitch->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">PITCH</span></p></body></html>", nullptr));
         label_master_volume->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">VOLUME</span></p></body></html>", nullptr));
-        label_master_volume_2->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">TEMPO</span></p></body></html>", nullptr));
+        label_tempo->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">TEMPO</span></p></body></html>", nullptr));
         label_swing->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">SWING</span></p></body></html>", nullptr));
+        label_tempo_numeric->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">140</span></p></body></html>", nullptr));
         groupBox->setTitle(QString());
         groupBox_master_controls_2->setTitle(QString());
 #ifndef QT_NO_TOOLTIP

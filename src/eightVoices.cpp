@@ -10,7 +10,7 @@ EightVoices::EightVoices() {
 double EightVoices::tick() {
     double outputSample = 0;
     for (auto voice : voices) {
-        outputSample += voice->tick() / 8;
+        outputSample += voice->tick();
     }
     return outputSample;
 }

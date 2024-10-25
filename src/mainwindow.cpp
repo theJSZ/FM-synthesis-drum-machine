@@ -4,12 +4,14 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , audioThread(nullptr)
+    // , audioThread(this, nullptr)
     , groupBoxes()
     , mutateAmount(0)
 {
+    audioThread = new AudioThread(this);
     ui->setupUi(this);
     srand(time(NULL));
+
 
     groupBoxes[0]  = ui->groupBox_1;
     groupBoxes[1]  = ui->groupBox_2;
@@ -20,40 +22,15 @@ MainWindow::MainWindow(QWidget *parent)
     groupBoxes[6]  = ui->groupBox_7;
     groupBoxes[7]  = ui->groupBox_8;
 
-    stepButtons[0]  = ui->btn_step_1;
-    stepButtons[1]  = ui->btn_step_2;
-    stepButtons[2]  = ui->btn_step_3;
-    stepButtons[3]  = ui->btn_step_4;
-    stepButtons[4]  = ui->btn_step_5;
-    stepButtons[5]  = ui->btn_step_6;
-    stepButtons[6]  = ui->btn_step_7;
-    stepButtons[7]  = ui->btn_step_8;
-    stepButtons[8]  = ui->btn_step_9;
-    stepButtons[9]  = ui->btn_step_10;
-    stepButtons[10] = ui->btn_step_11;
-    stepButtons[11] = ui->btn_step_12;
-    stepButtons[12] = ui->btn_step_13;
-    stepButtons[13] = ui->btn_step_14;
-    stepButtons[14] = ui->btn_step_15;
-    stepButtons[15] = ui->btn_step_16;
-    stepButtons[16] = ui->btn_step_17;
-    stepButtons[17] = ui->btn_step_18;
-    stepButtons[18] = ui->btn_step_19;
-    stepButtons[19] = ui->btn_step_20;
-    stepButtons[20] = ui->btn_step_21;
-    stepButtons[21] = ui->btn_step_22;
-    stepButtons[22] = ui->btn_step_23;
-    stepButtons[23] = ui->btn_step_24;
-    stepButtons[24] = ui->btn_step_25;
-    stepButtons[25] = ui->btn_step_26;
-    stepButtons[26] = ui->btn_step_27;
-    stepButtons[27] = ui->btn_step_28;
-    stepButtons[28] = ui->btn_step_29;
-    stepButtons[29] = ui->btn_step_30;
-    stepButtons[30] = ui->btn_step_31;
-    stepButtons[31] = ui->btn_step_32;
+    // assign step buttons
+    for (int i = 0; i < 8; ++i) {
+        QGroupBox *groupBox = groupBoxes[i];
+        for (int j = 0; j < 4; ++j) {
+            QPushButton *button = groupBox->findChild<QPushButton *>(QString("btn_step_%1").arg(i+1 + j*8));
+            stepButtons[i + j*8] = button;
+        }
+    }
 
-    audioThread = new AudioThread();
     audioThread->start();
 
     // connect master pitch
@@ -70,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
         audioThread->setMasterVolume((float) value / 1000);
     });
 
-    // connect swin
+    // connect swing
     connect(ui->dial_swing, &QDial::valueChanged, [=](int value) {
         audioThread->setSwing(value / 2);
     });
@@ -78,13 +55,11 @@ MainWindow::MainWindow(QWidget *parent)
     // connect tempo
     connect(ui->dial_tempo, &QDial::valueChanged, [=](int value) {
         audioThread->setBpm((float) value);
+        ui->label_tempo_numeric->setText(QString::number(value));
+        ui->label_tempo_numeric->setAlignment(Qt::AlignCenter);
     });
 
-
-
-    ui->dial_master_pitch->setValue(1);
-    ui->dial_master_pitch->setValue(0);
-    ui->dial_mutate->setValue(0);
+    ui->dial_tempo->setValue(130);
 
     // connect reverb mix
     connect(ui->dial_reverb_mix, &QDial::valueChanged, [=](int value) {
@@ -118,76 +93,76 @@ MainWindow::MainWindow(QWidget *parent)
             switch (j)
             {
             case 0:
+                // pitch
                 connect(dials[j], &QDial::valueChanged, [=](int dialValue) {
                     float scaledDialValue = (float) dialValue / 500;
                     scaledDialValue += 1;   //  0 .. 2
                     audioThread->sequencer->steps[i]->frequencyMultiplier = scaledDialValue;
                 });
-                // pitch
                 break;
             case 1:
+                // ramp amount
                 connect(dials[j], &QDial::valueChanged, [=](int dialValue) {
                     float scaledDialValue = (float) dialValue / 1000;
                     audioThread->sequencer->steps[i]->rampAmount = scaledDialValue;
                 });
-                // ramp amount
                 break;
             case 2:
+                // ramp decay
                 connect(dials[j], &QDial::valueChanged, [=](int dialValue) {
                     float scaledDialValue = (float) dialValue / 1000 + 0.01;
                     audioThread->sequencer->steps[i]->rampDecay = scaledDialValue * scaledDialValue;
                 });
-                // ramp decay
                 break;
             case 3:
+                // fm amount
                 connect(dials[j], &QDial::valueChanged, [=](int dialValue) {
                     float scaledDialValue = (float) dialValue / 4000;
                     audioThread->sequencer->steps[i]->fmAmount = scaledDialValue * scaledDialValue;
                 });
-                // fm amount
                 break;
             case 4:
+                // fm frequency
                 connect(dials[j], &QDial::valueChanged, [=](int dialValue) {
                     float scaledDialValue = (float) dialValue / 500;
                     scaledDialValue += 0.5;   //  0 .. 1.5
                     audioThread->sequencer->steps[i]->fmFrequencyMultiplier = scaledDialValue;
                 });
-                // fm frequency
                 break;
             case 5:
+                // fm decay
                 connect(dials[j], &QDial::valueChanged, [=](int dialValue) {
                     float scaledDialValue = (float) dialValue / 1000 + 0.01;
                     audioThread->sequencer->steps[i]->fmDecay = scaledDialValue * scaledDialValue;
                 });
-                // fm decay
                 break;
             case 6:
+                // fm feedback
                 connect(dials[j], &QDial::valueChanged, [=](int dialValue) {
                     float scaledDialValue = (float) dialValue / 1000;
-                    audioThread->sequencer->steps[i]->fmFeedback = scaledDialValue * scaledDialValue;
+                    audioThread->sequencer->steps[i]->fmFeedback = scaledDialValue;
                 });
-                // fm feedback
                 break;
             case 7:
+                // amp decay
                 connect(dials[j], &QDial::valueChanged, [=](int dialValue) {
                     float scaledDialValue = (float) dialValue / 1000 + 0.01;
                     audioThread->sequencer->steps[i]->aegDecay = scaledDialValue * scaledDialValue;
                 });
-                // amp decay
                 break;
             case 8:
+                // volume
                 connect(dials[j], &QDial::valueChanged, [=](int dialValue) {
                     float scaledDialValue = (float) dialValue / 1000;
                     audioThread->sequencer->steps[i]->volume = scaledDialValue * scaledDialValue;
                 });
-                // volume
                 break;
             case 9:
+                // randomness
                 connect(dials[j], &QDial::valueChanged, [=](int dialValue) {
                     int scaledDialValue = dialValue / 2;
                     audioThread->sequencer->steps[i]->randomness = scaledDialValue;
                 });
-                // randomness
                 break;
             default:
                 break;
@@ -198,7 +173,7 @@ MainWindow::MainWindow(QWidget *parent)
         for (int i = 0; i < N_STEPS; ++i) {
 
             QList<QDial *> dials = groupBoxes[i]->findChildren<QDial *>();
-            for (int j = 0; j < dials.size(); ++j) {
+            for (int j = 0; j < dials.size()-1; ++j) { // don't randomize %
                 int randNum = rand()%(dials[j]->maximum() - dials[j]->minimum() + 1) + dials[j]->minimum();
 
                 dials[j]->setValue(randNum);
@@ -209,15 +184,17 @@ MainWindow::MainWindow(QWidget *parent)
     // connect mutate
     connect(ui->dial_mutate, &QDial::valueChanged, this, &MainWindow::setMutateAmount);
 
+    // sequencer :current step changed
     connect(audioThread->sequencer, &Sequencer::currentStepChanged, this, &MainWindow::handleStepChanged, Qt::UniqueConnection);
 
+    // sequencer: step active status changed
     connect(audioThread->sequencer, &Sequencer::stepActiveStatusChanged, this, [=](int step, bool on) {
         QString style;
         if (on) style = "border-radius:3; border: 1px solid black;background-color: red";
         else style = "border-radius:3; border: 1px solid black;background-color: gray";
         stepButtons[step]->setStyleSheet(style);
     }, Qt::UniqueConnection);
-}
+} // MainWindow()
 
 void MainWindow::setMutateAmount(int dialValue) {
     this->mutateAmount = dialValue;
@@ -240,6 +217,8 @@ void MainWindow::handleStepChanged(int stepNumber) {
                 dials[j]->setValue(newValue);
             }
     }
+
+    // light up current step, return previous step to default
     stepButtons[stepNumber]->setStyleSheet(STEP_STYLESHEET_CURRENT);
     setStepButtonLight((stepNumber + 31) % 32, audioThread->sequencer->activeStep[(stepNumber + 31) % 32]);
 }
@@ -259,4 +238,41 @@ MainWindow::~MainWindow()
 
 void MainWindow::setBackgroundColor(QWidget* element, std::string color) {
     element->setStyleSheet(QString("background-color:pink"));
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    switch (event->key())
+    {
+    case 57:  // key 9
+        std::cout << "9" << std::endl;
+        break;
+
+    case 48:  // key 0
+        std::cout << "0" << std::endl;
+        shiftPattern(1);
+        break;
+
+    default:
+        break;
+    }
+}
+
+// all this stuff not working yet
+void MainWindow::shiftPattern(int shiftAmount) {
+    QGroupBox *tempBox = groupBoxes[0];
+    for (int i = 7; i > 0; --i) {
+        groupBoxes[(i+1) % 8] = groupBoxes[i];
+    }
+    groupBoxes[1] = tempBox;
+    updateLayout();
+}
+
+void MainWindow::updateLayout() {
+    // Example: If using a layout manager
+    for (int i = 0; i < 8; ++i) {
+        QList<QDial *> dials = groupBoxes[i]->findChildren<QDial *>();
+        for (QDial *dial : dials) {
+            dial->update();
+        }
+    }
 }

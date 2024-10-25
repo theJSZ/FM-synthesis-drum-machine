@@ -6,17 +6,22 @@
 #include <QList>
 #include <QString>
 #include <QPushButton>
+#include <QKeyEvent>
+#include <QLayout>
+#include <QFontDatabase>
+
 #include <string>
-#include "audiothread.h"
 #include <math.h>
-// #include "clickdetector.h"
 #include <random>
 #include <time.h>
+
+#include "audiothread.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+class AudioThread;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -26,15 +31,26 @@ public:
     ~MainWindow();
     void setStepButtonLight(int step, bool on);
 
+signals:
+    void keyPressed(QKeyEvent *event);
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override; /* override {
+        emit keyPressed(event);
+        QMainWindow::keyPressEvent(event); // Call base class implementation
+    }*/
+    QGroupBox *groupBoxes[16];
+
 private:
     Ui::MainWindow *ui;
     AudioThread *audioThread;
     void setBackgroundColor(QWidget*, std::string);
-    QGroupBox *groupBoxes[16];
     QPushButton *stepButtons[32];
     void initializeConnections();
     void handleStepChanged(int StepNumber);
     int mutateAmount;
     void setMutateAmount(int dialValue);
+    void shiftPattern(int shiftAmount);
+    void updateLayout();
 };
 #endif // MAINWINDOW_H

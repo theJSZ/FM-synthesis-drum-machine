@@ -23,32 +23,39 @@ set(SOURCES
 set(CMAKE_AUTOMOC ON)
 
 
+
+
 # Add STK source files to your project
 file(GLOB STK_SOURCES ${CMAKE_SOURCE_DIR}/../stk/src/*.cpp)
 
 # Add executable for your project
 add_executable(mega_fm ${SOURCES} ${STK_SOURCES})
 
-# Platform-specific settings
-if (WIN32)
-    # Define Windows-specific audio API (STK supports DirectSound and WASAPI on Windows)
-    target_compile_definitions(mega_fm PRIVATE __WINDOWS_DS__)  # or __WINDOWS_WASAPI__
-
-    # Link Windows-specific libraries
-    target_link_libraries(mega_fm PRIVATE Qt5::Core Qt5::Widgets dsound pthread)
-else()
-    # Define the audio API for Linux
-    target_compile_definitions(mega_fm PRIVATE __LINUX_ALSA__)
-
-    # Link the ALSA library for Linux
-    target_link_libraries(mega_fm PRIVATE Qt5::Core Qt5::Widgets asound pthread)
-endif()
 
 ##### Define the audio API for STK
 #### target_compile_definitions(mega_fm PRIVATE __LINUX_ALSA__)
 
 # Find the Qt libraries
 find_package(Qt5 COMPONENTS Widgets Core REQUIRED)
+
+# Link SDL2
+find_package(SDL2 REQUIRED)
+include_directories(${SDL2_INCLUDE_DIRS})
+
+# Platform-specific settings
+if (WIN32)
+# Define Windows-specific audio API (STK supports DirectSound and WASAPI on Windows)
+target_compile_definitions(mega_fm PRIVATE __WINDOWS_DS__)  # or __WINDOWS_WASAPI__
+
+# Link Windows-specific libraries
+target_link_libraries(mega_fm PRIVATE Qt5::Core Qt5::Widgets dsound pthread)
+else()
+# Define the audio API for Linux
+target_compile_definitions(mega_fm PRIVATE __LINUX_ALSA__)
+
+# Link the ALSA library for Linux
+target_link_libraries(mega_fm PRIVATE Qt5::Core Qt5::Widgets asound pthread ${SDL2_LIBRARIES})
+endif()
 
 # Link the ALSA library
 # find_package(ASound REQUIRED)
@@ -65,3 +72,6 @@ include_directories(${Qt5_INCLUDE_DIRS})
 
 # Link any necessary libraries (if STK has them)
 # You can specify more libraries here as needed
+
+qt5_add_resources(RESOURCES src/mega_fm.qrc)
+target_sources(mega_fm PRIVATE ${RESOURCES})
