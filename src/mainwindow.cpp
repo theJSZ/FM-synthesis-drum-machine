@@ -4,15 +4,14 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    // , audioThread(this, nullptr)
     , groupBoxes()
-    , mutateAmount(0)
 {
     audioThread = new AudioThread(this);
     ui->setupUi(this);
     srand(time(NULL));
+    modifiedPattern[0] = true;
 
-
+    // assign groupboxes
     groupBoxes[0]  = ui->groupBox_1;
     groupBoxes[1]  = ui->groupBox_2;
     groupBoxes[2]  = ui->groupBox_3;
@@ -231,30 +230,49 @@ void MainWindow::setStepButtonLight(int step, bool on) {
     stepButtons[step]->setStyleSheet(style);
 }
 
+void MainWindow::setPatternButtonLight(int pattern) {
+    QPushButton *button = ui->groupBox_labels->findChild<QPushButton *>(QString("btn_pattern_%1").arg(pattern + 1));
+    if (!modifiedPattern[pattern]) {
+        button->setStyleSheet("border-radius:3; border: 1px solid black; background-color: gray");
+    } else {
+        button->setStyleSheet("border-radius:3; border: 1px solid black; background-color: red");
+    }
+
+    if (currentPattern == pattern) {
+        button->setStyleSheet("border-radius:3; border: 1px solid black; background-color: white");
+    }
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-void MainWindow::setBackgroundColor(QWidget* element, std::string color) {
-    element->setStyleSheet(QString("background-color:pink"));
-}
+// void MainWindow::setBackgroundColor(QWidget* element, std::string color) {
+//     element->setStyleSheet(QString("background-color:pink"));
+// }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     // 49 is 1. 33 is shift+1
+    // shift + number saves pattern to that slot
     if (event->key() >= 33 && event->key() <= 40) {
-        loadPattern(event->key() - 33);
+        savePattern(event->key() - 33);
     }
-    if (event->key() == 164) loadPattern(3);
-    if (event->key() == 47) loadPattern(6);
+    if (event->key() == 164) savePattern(3);
+    if (event->key() == 47) savePattern(6);
 
+    // number key saves current pattern and switches to slot <number>
     if (event->key() >= 49 && event->key() <= 56) {
-        savePattern(event->key() - 49);
+        savePattern(currentPattern);
+        loadPattern(event->key() - 49);
+        currentPattern = event->key() - 49;
+        for (int i = 0; i < 8; ++i) {
+            setPatternButtonLight(i);
+        }
     }
 }
 
 void MainWindow::savePattern(int slot) {
-    std::cout << "saving to slot " << slot << std::endl;
     int i = 0;
     int parameters[14*8];
 
@@ -268,10 +286,10 @@ void MainWindow::savePattern(int slot) {
         parameters[i++] = (int) step;
     }
     audioThread->sequencer->patterns[slot]->setPatternParameters(parameters);
+    modifiedPattern[slot] = true;
 }
 
 void MainWindow::loadPattern(int slot) {
-    std::cout << "loading from slot " << slot << std::endl;
     int *parameters = audioThread->sequencer->patterns[slot]->getPatternParameters();
     int i = 0;
     for (auto groupBox : groupBoxes) {

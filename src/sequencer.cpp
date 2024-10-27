@@ -2,10 +2,7 @@
 
 Sequencer::Sequencer(AudioThread* audioThread, MainWindow* mainWindow) :
   audiothread(audioThread),
-  mainWindow(mainWindow),
-  currentStepNumber(0),
-  bpm(120),
-  activeStep{0}
+  mainWindow(mainWindow)
 
   {
     for (int i = 0; i < 8; ++i) {

@@ -1,29 +1,26 @@
 #include "fmosc.h"
 
 FMOsc::FMOsc() :
-  carrier(new stk::SineWave),
-  modulator(new stk::SineWave),
-  frequencyMultiplier(1),
-  rampAmount(0.0),
-  rampDecay(0.001),
-  fmAmount(0.0),
-  fmFrequencyMultiplier(1.0),
-  masterFrequencyMultiplier(1.0),
-  fmDecay(0.001),
-  fmFeedback(0.0),
-  aegDecay(0.001),
-  volume(1.0),
-  ampEnvelope(new stk::ADSR),
-  ampEnvelope2(new stk::ADSR),
-  fmEnvelope(new stk::ADSR),
-  pitchEnvelope(new stk::ADSR)
+  carrier(new stk::SineWave()),
+  modulator(new stk::SineWave()),
+  ampEnvelope(new stk::ADSR()),
+  ampEnvelope2(new stk::ADSR()),
+  fmEnvelope(new stk::ADSR()),
+  pitchEnvelope(new stk::ADSR())
   {
     ampEnvelope->setAllTimes(0.001, 1, 0.0, 0.001);
     ampEnvelope2->setAllTimes(0.01, 0.01, 0.0, 0.001);
     fmEnvelope->setAllTimes(0.001, 1, 0.0, 0.001);
     ampEnvelope->setAllTimes(0.001, 1, 0.0, 0.001);
   }
-FMOsc::~FMOsc() {}
+FMOsc::~FMOsc() {
+  delete carrier;
+  delete modulator;
+  delete ampEnvelope;
+  delete ampEnvelope2;
+  delete fmEnvelope;
+  delete pitchEnvelope;
+}
 
 void FMOsc::setFrequencyMultiplier(float frequencyMultiplier) {
   this->frequencyMultiplier = frequencyMultiplier;

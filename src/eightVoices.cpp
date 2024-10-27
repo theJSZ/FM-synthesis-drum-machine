@@ -7,6 +7,12 @@ EightVoices::EightVoices() {
     }
 }
 
+EightVoices::~EightVoices() {
+    for (int i = 0; i < 8; ++i) {
+        delete voices[i];
+    }
+}
+
 double EightVoices::tick() {
     double outputSample = 0;
     for (auto voice : voices) {

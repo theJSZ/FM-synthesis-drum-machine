@@ -1,8 +1,12 @@
 #include "pattern.h"
 
 Pattern::Pattern() {
-  for (int i = 0; i < sizeof(patternParameters) / sizeof(patternParameters[0]); ++i) {
+  for (int i = 0; i < sizeof(patternParameters) / sizeof(patternParameters[0]) - 32; ++i) {
     patternParameters[i] = 1;
+  }
+
+  for (int i = sizeof(patternParameters) / sizeof(patternParameters[0]) - 32; i < sizeof(patternParameters) / sizeof(patternParameters[0]); ++i) {
+    patternParameters[i] = 0;
   }
 }
 

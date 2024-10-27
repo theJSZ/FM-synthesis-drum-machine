@@ -36,19 +36,19 @@ private:
   stk::SineWave *carrier;
   stk::SineWave *modulator;
 
-  float frequencyMultiplier;
-  float rampAmount;
-  float rampDecay;
+  float frequencyMultiplier = 1;
+  float rampAmount = 0;
+  float rampDecay = 0.001;
 
-  float fmAmount;
-  float fmFrequencyMultiplier;
-  float fmDecay;
-  float fmFeedback;
+  float fmAmount = 0;
+  float fmFrequencyMultiplier = 1;
+  float fmDecay = 0.001;
+  float fmFeedback = 0;
 
-  float aegDecay;
-  float volume;
+  float aegDecay = 0.001;
+  float volume = 1;
 
-  float masterFrequencyMultiplier;
+  float masterFrequencyMultiplier = 1;
 
 
 };

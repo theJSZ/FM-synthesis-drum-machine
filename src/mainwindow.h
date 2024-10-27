@@ -48,12 +48,16 @@ private:
     QPushButton *stepButtons[32];
     void initializeConnections();
     void handleStepChanged(int StepNumber);
-    int mutateAmount;
+    int mutateAmount = 0;
     void setMutateAmount(int dialValue);
     void shiftPattern(int shiftAmount);
     void updateLayout();
 
     void savePattern(int slot);
     void loadPattern(int slot);
+    int currentPattern = 0;
+    bool modifiedPattern[8] = {0};
+    void setPatternButtonLight(int pattern);
+
 };
 #endif // MAINWINDOW_H

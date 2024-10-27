@@ -2,18 +2,16 @@
 
 AudioThread::AudioThread(MainWindow *mainWindow, QObject *parent) :
   QThread(parent),
-  bpm(160),
   sequencer(new Sequencer(this, mainWindow)),
   voices(new EightVoices()),
-  reverb(new stk::FreeVerb()),
-  reverbMix(0.5),
-  masterVolume(1.0),
-  swing(0)
+  reverb(new stk::FreeVerb())
   {
   }
 
 AudioThread::~AudioThread() {
-
+  delete sequencer;
+  delete voices;
+  delete reverb;
 }
 
 int AudioThread::audioCallback(void *outputBuffer, void *inputBuffer,

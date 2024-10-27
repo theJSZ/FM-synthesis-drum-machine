@@ -22,7 +22,7 @@ public:
   int getCurrentStepNumber();
   SequencerStep *steps[32];
   void toggleActiveStep(int step);
-  bool activeStep[32];
+  bool activeStep[32] = {0};
   Pattern *patterns[8];
 
 // public slots:
@@ -33,10 +33,10 @@ signals:
   void stepActiveStatusChanged(int stepNumber, bool on);
 
 private:
-  int bpm;
+  int bpm = 120;
   AudioThread *audiothread;
   MainWindow *mainWindow;
-  int currentStepNumber;
+  int currentStepNumber = 0;
   void updateOsc(int step);
   void playStep(int step);
   // void shiftPattern(int shiftAmount);

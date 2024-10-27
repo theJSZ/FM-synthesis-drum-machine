@@ -2,6 +2,7 @@
 #define AUDIOTHREAD_H
 
 #include <stdio.h>
+#include <memory>
 
 #include <QThread>
 
@@ -52,12 +53,12 @@ private:
 	RtAudio::StreamParameters parameters;
 	unsigned int sampleRate = SAMPLERATE;
 	unsigned int bufferFrames = BUFFER_FRAMES;
-	float bpm;
-	int swing;
+	float bpm = 160;
+	int swing = 0;
 
 	stk::FreeVerb *reverb;
-	float reverbMix;
-	float masterVolume;
+	float reverbMix = 0.5;
+	float masterVolume = 1;
 
 };
 
