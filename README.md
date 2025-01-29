@@ -37,6 +37,16 @@ Additionally, there are **master controls** for pitch and volume. Also controls 
 
 The **Mutate** control changes dial values randomly as the sequence plays.
 
+#### How to run (Linux):
+From the source directory:
+```
+mkdir build
+cd build
+cmake ..
+make
+./mega_fm
+```
+
 ### TODO:
 - MIDI clock input
 - Add STK as submodule?
