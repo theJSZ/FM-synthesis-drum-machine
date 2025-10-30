@@ -68,14 +68,31 @@ void FMOsc::reset() {
 }
 
 float FMOsc::tick() {
-  float targetVolume = volume * ampEnvelope->tick();
-  ampEnvelope2->setTarget(targetVolume);
-  float targetFrequency = (BASE_FREQUENCY * frequencyMultiplier * masterFrequencyMultiplier) * (1 + (4* rampAmount * pitchEnvelope->tick()));
-  carrier->setFrequency(targetFrequency);
-  modulator->setFrequency(targetFrequency * fmFrequencyMultiplier);
-  double modTick = modulator->tick() * fmEnvelope->tick();
-  modulator->addPhase(modTick * fmFeedback);
-  carrier->addPhase(modTick * fmAmount);
-  return carrier->tick() *  ampEnvelope2->tick();
+    float targetVolume = volume * ampEnvelope->tick();
+    ampEnvelope2->setTarget(targetVolume);
+    float targetFrequency = (BASE_FREQUENCY * frequencyMultiplier * masterFrequencyMultiplier) *
+                            (1 + (4 * rampAmount * pitchEnvelope->tick()));
+    carrier->setFrequency(targetFrequency);
+    modulator->setFrequency(targetFrequency * fmFrequencyMultiplier);
+
+    float fmEnvTick = fmEnvelope->tick();
+
+    // Compute modulator tick using feedback
+    // Use average of last two outputs for smoother feedback
+    float feedbackSample = 0.5f * previousModulatorSample +  0.5f * currentModulatorSample;
+    modulator->addPhase(feedbackSample * fmFeedback);
+
+    // Get the new modulator output
+    float modTick = modulator->tick();
+
+    // Update feedback buffer
+    previousModulatorSample = currentModulatorSample;
+    currentModulatorSample = modTick;
+
+    // Apply modulation to carrier
+    carrier->addPhase(modTick * fmEnvTick * fmAmount);
+
+    return carrier->tick() * ampEnvelope2->tick();
 }
+
 

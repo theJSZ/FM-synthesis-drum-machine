@@ -31,7 +31,7 @@ public:
   stk::ADSR *pitchEnvelope;
 
 
-private:
+  private:
 
   stk::SineWave *carrier;
   stk::SineWave *modulator;
@@ -43,12 +43,14 @@ private:
   float fmAmount = 0;
   float fmFrequencyMultiplier = 1;
   float fmDecay = 0.001;
-  float fmFeedback = 0;
+  float fmFeedback = 0.0;
 
   float aegDecay = 0.001;
   float volume = 1;
 
   float masterFrequencyMultiplier = 1;
+  float previousModulatorSample;
+  float currentModulatorSample;
 
 
 };

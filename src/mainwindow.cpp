@@ -167,16 +167,16 @@ MainWindow::MainWindow(QWidget *parent)
                 break;
             }
         }
+    }
 
         // randomize dials
-        for (int i = 0; i < N_STEPS; ++i) {
+    for (int i = 0; i < N_STEPS; ++i) {
 
-            QList<QDial *> dials = groupBoxes[i]->findChildren<QDial *>();
-            for (int j = 0; j < dials.size()-1; ++j) { // don't randomize %
-                int randNum = rand()%(dials[j]->maximum() - dials[j]->minimum() + 1) + dials[j]->minimum();
+        QList<QDial *> dials = groupBoxes[i]->findChildren<QDial *>();
+        for (int j = 0; j < dials.size()-1; ++j) { // don't randomize %
+            int randNum = rand()%(dials[j]->maximum() - dials[j]->minimum() + 1) + dials[j]->minimum();
 
-                dials[j]->setValue(randNum);
-            }
+            dials[j]->setValue(randNum);
         }
     }
 
