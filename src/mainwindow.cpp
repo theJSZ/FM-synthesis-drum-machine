@@ -139,6 +139,7 @@ MainWindow::MainWindow(QWidget *parent)
                 // fm feedback
                 connect(dials[j], &QDial::valueChanged, [=](int dialValue) {
                     float scaledDialValue = (float) dialValue / 1000;
+                    // std::cout << scaledDialValue << "\n";
                     audioThread->sequencer->steps[i]->fmFeedback = scaledDialValue;
                 });
                 break;

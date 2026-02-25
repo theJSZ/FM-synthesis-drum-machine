@@ -79,7 +79,8 @@ float FMOsc::tick() {
 
     // Compute modulator tick using feedback
     // Use average of last two outputs for smoother feedback
-    float feedbackSample = 0.5f * previousModulatorSample +  0.5f * currentModulatorSample;
+    // float feedbackSample = 0.5f * previousModulatorSample +  0.5f * currentModulatorSample;
+    float feedbackSample = currentModulatorSample;
     modulator->addPhase(feedbackSample * fmFeedback);
 
     // Get the new modulator output
@@ -87,7 +88,7 @@ float FMOsc::tick() {
 
     // Update feedback buffer
     previousModulatorSample = currentModulatorSample;
-    currentModulatorSample = modTick;
+    currentModulatorSample = (modTick  + 1) / 2;
 
     // Apply modulation to carrier
     carrier->addPhase(modTick * fmEnvTick * fmAmount);
